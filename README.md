@@ -1,42 +1,64 @@
-# sv
+This will probably serve as a first version of the actual SvelteBuilder scaffold project, but also include the UI component library and the i18n toolkit library in one simple SvelteKit project
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+This will also serve as an exploration platform for some outstanding questions, like how much of the language (localized content) support can be put into the library and what has to stay in the scaffold/project template code.
 
-## Creating a project
+Thoughtful .env based configuration- even the POC version of this should be deployable to Vercel etc by anyone and result in a correctly customized application.
 
-If you're seeing this, you've probably already done this step. Congrats!
+Target semantic markup and accessibility standards from the beginning, as strictly as possible.
 
-```sh
-# create a new project
-npx sv create my-app
-```
+Clear and solid error management from the beginning. Aim for some kind of safe integration with language support for user facing error messages.
 
-To recreate this project with the same configuration:
+Auth
 
-```sh
-# recreate this project
-pnpm dlx sv create --template minimal --types ts --add prettier eslint tailwindcss="plugins:typography,forms" sveltekit-adapter="adapter:vercel" devtools-json --install pnpm poc-svelte-builder
-```
+-   Supabase and Lucia implementation later? Might be easier to get clean SSO, fast, with Supa. Investigate.
 
-## Developing
+    -   The decision on this probably influences the decision on targeting Supabase or Drizzle for POC API\
+UI Component Library
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+-   Lowest common denominator of application UI I always find myself building
 
-```sh
-npm run dev
+    -   Navigation
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+    -   Action buttons
 
-## Building
+    -   Icons
 
-To create a production version of your app:
+    -   User/profile widgets
 
-```sh
-npm run build
-```
+    -   Forms
 
-You can preview the production build with `npm run preview`.
+    -   Post/comment widgets (nearly universal, but this is probably bordering into overly specific)
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+Language Support
+
+-   API for content
+
+    -   SvelteKit routes, final version should allow custom URLs and work in plain Svelte (client side)
+
+    -   Target Drizzle from the beginning or start with Supabase?
+
+-   Load function
+
+    -   Takes JSON/POJO retrieved from API, in correct custom Type
+
+    -   Overloaded to accept pre-merged/filtered dictionary or raw data
+
+    -   Stored in shared rune
+
+-   Output
+
+    -   Simple Svelte component with overloadable parameters to narrow scope and target individual dynamic content items. Scope defaults to "global", contentId defaults to null- which triggers different logic. A non-null contentId will filter an ID indexed array for a given slug instead of just finding by slug and scope. This component can be wrapped/extended for friendly syntax.
+
+        -   `<LocalText slug="my_content" />`
+
+        -   `<LocalText slug="my_content" scope="moduleName" />`
+
+        -   `<LocalText slug="my_content" scope="moduleName" contentId="13" />`
+
+        -   `<BlogWelcomeText blog="42" />`
+
+    -   Explore best option for inline output - try to consider how to keep the most functionality in the eventual library
+
+        -   Shared store with custom getter? $lt.slug("my_content")
+
+        -   Share state rune wrapped in a custom function? localText("my_content")
