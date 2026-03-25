@@ -4,6 +4,7 @@
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { loadDictionary } from '$lib/localization/dictionary.svelte';
+	import ProfileSummaryWidget from '$lib/components/universal/User/Account/ProfileSummaryWidget.svelte';
 
 	let { data, children } = $props();
 	let { supabase, session, dictionaryPayload } = $derived(data);
@@ -14,7 +15,9 @@
 	$effect(() => {
 		dictionaryLoaded = loadDictionary(dictionaryPayload);
 	});
+
 	onMount(() => {
+		console.log('session', session);
 		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth');
@@ -28,13 +31,13 @@
 <svelte:head><title>Svelte Builder POC</title></svelte:head>
 
 <div class="h-screen w-screen p-6">
-	<div class="top-0 w-full rounded-lg bg-blue-500 p-2 text-red-500">
+	<div class="w-full justify-end rounded-lg border border-amber-700 text-right">
 		{#if !session}
 			<a href="/login">Magic Link Login</a>
 			----
 			<a href="/login/google">Google Login</a>
 		{:else}
-			LOGGED IN
+			<ProfileSummaryWidget {session} />
 		{/if}
 	</div>
 
