@@ -6,7 +6,8 @@ export const GET = async ({ locals: { supabase }, params: { locale } }) => {
 		.select(
 			`
             *,
-            locale!inner()
+            locale!inner(),
+			link!inner(id, slug, title, scope)
             `
 		)
 		.eq('locale.code', `${locale}`);
