@@ -10,7 +10,7 @@ export type Locale = {
 	code: string;
 	title: string;
 	native_title: string;
-	dir: string;
+	dir: 'ltr' | 'rtl' | 'auto';
 };
 
 export type LocalText = {

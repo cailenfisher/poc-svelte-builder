@@ -5,7 +5,7 @@ export const load: LayoutServerLoad = async ({ locals: { safeGetSession }, cooki
 	let dictionaryPayload = null;
 
 	try {
-		const result = await fetch('/api/local_text/en');
+		const result = await fetch('/api/local_text');
 		dictionaryPayload = await result.json();
 	} catch (e) {
 		console.error('layout.server - error fetching localized content');

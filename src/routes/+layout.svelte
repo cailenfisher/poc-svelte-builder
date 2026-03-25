@@ -1,4 +1,5 @@
 <script lang="ts">
+	import './layout.css';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { loadDictionary } from '$lib/localization/dictionary.svelte';
@@ -6,9 +7,12 @@
 	let { data, children } = $props();
 	let { supabase, session, dictionaryPayload } = $derived(data);
 
-	onMount(() => {
-		loadDictionary(dictionaryPayload);
+	let dictionaryLoaded = $state(false);
+	$effect(() => {
+		dictionaryLoaded = loadDictionary(dictionaryPayload);
+	});
 
+	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth');
@@ -19,19 +23,22 @@
 	});
 </script>
 
-<svelte:head>
-	<title>Svelte Builder POC</title>
-</svelte:head>
+<svelte:head><title>Svelte Builder POC</title></svelte:head>
 
 <div class="h-screen w-screen p-6">
-	<div class="top-0 w-full rounded-lg bg-blue-500 p-2">
+	<div class="top-0 w-full rounded-lg bg-blue-500 p-2 text-red-500">
 		{#if !session}
-			<a href="/login">Magic Link Login</a> ----
+			<a href="/login">Magic Link Login</a>
+			----
 			<a href="/login/google">Google Login</a>
 		{:else}
 			LOGGED IN
 		{/if}
 	</div>
 
-	{@render children()}
+	{#if dictionaryLoaded}
+		{@render children()}
+	{:else}
+		<div class="p-1 text-2xl text-amber-200">Loading localized content...</div>
+	{/if}
 </div>
