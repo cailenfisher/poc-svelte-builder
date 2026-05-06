@@ -18,7 +18,7 @@
 
 	onMount(() => {
 		console.log('session', session);
-		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
+		const { data } = supabase.auth.onAuthStateChange((_event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth');
 			}
@@ -31,15 +31,28 @@
 <svelte:head><title>Svelte Builder POC</title></svelte:head>
 
 <div class="h-screen w-screen p-6">
-	<div class="w-full justify-end rounded-lg border border-amber-700 text-right">
-		{#if !session}
-			<a href="/login">Magic Link Login</a>
-			----
-			<a href="/login/google">Google Login</a>
-		{:else}
-			<ProfileSummaryWidget {session} />
-		{/if}
-	</div>
+	<nav
+		class="mb-6 flex items-center justify-between rounded-lg border border-gray-200 bg-white px-5 py-3 shadow-sm"
+	>
+		<a href="/" class="text-base font-semibold text-gray-900 hover:text-blue-600">SvelteBuilder</a>
+		<div class="flex items-center gap-4">
+			{#if !session}
+				<a
+					href="/login"
+					class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none"
+				>
+					Sign in
+				</a>
+			{:else}
+				<a
+					href="/profile"
+					class="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+				>
+					<ProfileSummaryWidget {session} />
+				</a>
+			{/if}
+		</div>
+	</nav>
 
 	{#if dictionaryLoaded || !enableLocalization}
 		{@render children()}
