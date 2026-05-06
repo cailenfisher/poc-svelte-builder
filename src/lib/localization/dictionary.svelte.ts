@@ -19,6 +19,7 @@ export const loadDictionary = (data: LocalText[], flattened: boolean = false): b
 	}
 	if (flattened) {
 		// trust but verify
+		// todo: find optimized approach to this check
 		const seen = new Set<string>();
 		for (const item of data) {
 			const key = `${item.link.id}|${item.scoped_content_id ?? 'null'}`;
@@ -46,11 +47,11 @@ function flattenDictionary(
 		return undefined;
 	}
 
-	const grouped = payload.reduce<Record<string, Record<string, LocalText>>>((acc, item) => {
+	const grouped = payload.reduce<Record<string, Record<string, LocalText>>>((results, item) => {
 		const key = `${item.link.id}|${item.scoped_content_id ?? 'null'}`;
-		if (!acc[key]) acc[key] = {};
-		acc[key][item.locale.code] = item;
-		return acc;
+		if (!results[key]) results[key] = {};
+		results[key][item.locale.code] = item;
+		return results;
 	}, {});
 
 	return Object.values(grouped).map((localeEntries) => {
