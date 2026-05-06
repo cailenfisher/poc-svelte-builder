@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import type { ActionData, PageData, SubmitFunction } from './$types.js';
 	import AvatarPlaceholder from '$lib/components/universal/User/Account/Auth/AvatarPlaceholder.svelte';
+	import LocalText from '$lib/localization/LocalText.svelte';
 
 	interface Props {
 		data: PageData;
@@ -69,7 +70,7 @@
 					<p class="text-sm text-gray-500">{user?.email}</p>
 					{#if joinedDate}
 						<span class="mt-1 inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700">
-							Member since {joinedDate}
+							<LocalText slug="profile_member_since" />{joinedDate}
 						</span>
 					{/if}
 				</div>
@@ -78,7 +79,9 @@
 
 		<!-- Personal information card -->
 		<div class="rounded-lg bg-white p-6 shadow-md">
-			<h2 class="mb-4 text-lg font-semibold text-gray-900">Personal Information</h2>
+			<h2 class="mb-4 text-lg font-semibold text-gray-900">
+				<LocalText slug="profile_personal_info_heading" />
+			</h2>
 
 			{#if form?.message !== undefined}
 				<div
@@ -93,7 +96,7 @@
 			<form method="POST" action="?/updateProfile" use:enhance={handleUpdate} class="space-y-4">
 				<div>
 					<label for="displayName" class="mb-2 block text-sm font-medium text-gray-700">
-						Display name
+						<LocalText slug="profile_display_name_label" />
 					</label>
 					<input
 						id="displayName"
@@ -109,14 +112,19 @@
 				</div>
 
 				<div>
-					<label class="mb-2 block text-sm font-medium text-gray-700">Email address</label>
+					<label for="profile_email_display" class="mb-2 block text-sm font-medium text-gray-700">
+						<LocalText slug="common_email_label" />
+					</label>
 					<input
+						id="profile_email_display"
 						type="email"
 						value={user?.email ?? ''}
 						disabled
 						class="block w-full cursor-not-allowed rounded-lg border border-gray-200 bg-gray-100 p-2.5 text-sm text-gray-500"
 					/>
-					<p class="mt-1 text-xs text-gray-400">Email cannot be changed here.</p>
+					<p class="mt-1 text-xs text-gray-400">
+						<LocalText slug="profile_email_hint" />
+					</p>
 				</div>
 
 				<div class="flex justify-end">
@@ -125,7 +133,11 @@
 						disabled={saving}
 						class="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:cursor-not-allowed disabled:opacity-60"
 					>
-						{saving ? 'Saving…' : 'Save changes'}
+						{#if saving}
+							<LocalText slug="common_saving" />
+						{:else}
+							<LocalText slug="profile_save_button" />
+						{/if}
 					</button>
 				</div>
 			</form>
@@ -133,15 +145,23 @@
 
 		<!-- Danger zone -->
 		<div class="rounded-lg border border-gray-200 bg-white p-6 shadow-md">
-			<h2 class="mb-1 text-lg font-semibold text-gray-900">Account</h2>
-			<p class="mb-4 text-sm text-gray-500">Sign out of your account on this device.</p>
+			<h2 class="mb-1 text-lg font-semibold text-gray-900">
+				<LocalText slug="profile_account_heading" />
+			</h2>
+			<p class="mb-4 text-sm text-gray-500">
+				<LocalText slug="profile_account_subtitle" />
+			</p>
 			<form method="POST" action="?/signOut" use:enhance={handleSignOut}>
 				<button
 					type="submit"
 					disabled={signingOut}
 					class="rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-100 disabled:cursor-not-allowed disabled:opacity-60"
 				>
-					{signingOut ? 'Signing out…' : 'Sign out'}
+					{#if signingOut}
+						<LocalText slug="profile_signing_out_button" />
+					{:else}
+						<LocalText slug="profile_sign_out_button" />
+					{/if}
 				</button>
 			</form>
 		</div>

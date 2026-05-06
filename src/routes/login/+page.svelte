@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { ActionData, SubmitFunction } from './$types.js';
+	import LocalText from '$lib/localization/LocalText.svelte';
 
 	interface Props {
 		form: ActionData;
@@ -24,12 +25,18 @@
 <div class="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 py-8">
 	<div class="w-full max-w-md">
 		<div class="mb-6 flex justify-center">
-			<a href="/" class="text-2xl font-bold text-gray-900">SvelteBuilder</a>
+			<a href="/" class="text-2xl font-bold text-gray-900">
+				<LocalText slug="nav_brand" />
+			</a>
 		</div>
 
 		<div class="rounded-lg bg-white p-6 shadow-md sm:p-8">
-			<h1 class="mb-1 text-xl font-bold text-gray-900">Sign in to your account</h1>
-			<p class="mb-5 text-sm text-gray-500">Use magic link or continue with Google</p>
+			<h1 class="mb-1 text-xl font-bold text-gray-900">
+				<LocalText slug="login_heading" />
+			</h1>
+			<p class="mb-5 text-sm text-gray-500">
+				<LocalText slug="login_subtitle" />
+			</p>
 
 			<a
 				href="/login/google"
@@ -53,12 +60,14 @@
 						fill="#EA4335"
 					/>
 				</svg>
-				Continue with Google
+				<LocalText slug="login_google_button" />
 			</a>
 
 			<div class="mb-5 flex items-center">
 				<div class="h-px flex-1 bg-gray-200"></div>
-				<span class="px-3 text-sm text-gray-400">or use magic link</span>
+				<span class="px-3 text-sm text-gray-400">
+					<LocalText slug="login_divider" />
+				</span>
 				<div class="h-px flex-1 bg-gray-200"></div>
 			</div>
 
@@ -75,7 +84,7 @@
 
 				<div class="mb-4">
 					<label for="email" class="mb-2 block text-sm font-medium text-gray-900">
-						Email address
+						<LocalText slug="common_email_label" />
 					</label>
 					<input
 						id="email"
@@ -95,7 +104,11 @@
 					disabled={loading}
 					class="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
 				>
-					{loading ? 'Sending…' : 'Send magic link'}
+					{#if loading}
+						<LocalText slug="login_sending" />
+					{:else}
+						<LocalText slug="login_send_button" />
+					{/if}
 				</button>
 			</form>
 		</div>
