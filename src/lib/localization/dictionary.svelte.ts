@@ -69,8 +69,9 @@ export const loadDictionary = (data: LocalText[], flattened: boolean = false): b
 		return false;
 	}
 	mfCache.clear();
-	dictionary = flattened ? verifiedFlat(data) : flattenDictionary(data);
-	return dictionary !== undefined;
+	const result = flattened ? verifiedFlat(data) : flattenDictionary(data);
+	dictionary = result;
+	return result !== undefined;
 };
 
 // Additive load for scope-partitioned content fetched at the page level.
