@@ -8,9 +8,9 @@ export type LocalTextLink = {
 export type Locale = {
 	id: number;
 	code: string;
-	title: string;
-	native_title: string;
-	dir: 'ltr' | 'rtl' | 'auto';
+	name: string;
+	native_name: string;
+	dir: 'ltr' | 'rtl' | 'auto' | null;
 };
 
 export type LocalText = {
