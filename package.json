@@ -39,7 +39,12 @@
 		"vite-plugin-devtools-json": "^1.0.0"
 	},
 	"dependencies": {
+		"@fortawesome/fontawesome-svg-core": "^7.2.0",
+		"@fortawesome/free-brands-svg-icons": "^7.2.0",
+		"@fortawesome/free-solid-svg-icons": "^7.2.0",
+		"@fortawesome/svelte-fontawesome": "^0.2.4",
 		"@supabase/ssr": "^0.8.0",
-		"@supabase/supabase-js": "^2.97.0"
+		"@supabase/supabase-js": "^2.97.0",
+		"intl-messageformat": "^11.2.4"
 	}
 }

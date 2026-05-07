@@ -5,7 +5,7 @@
 	let { user } = $props();
 
 	const profileImage = $derived(user.user_metadata.avatar_url ?? null);
-	const profileImageLabel = getContentBySlug('profile_image')?.content ?? 'Avatar';
+	let profileImageLabel = $derived(getContentBySlug('profile_image')?.content ?? 'Avatar');
 </script>
 
 <div class="flex items-center gap-2.5">

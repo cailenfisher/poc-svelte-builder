@@ -3,6 +3,10 @@
 	import type { ActionData, PageData, SubmitFunction } from './$types.js';
 	import AvatarPlaceholder from '$lib/components/universal/User/Account/Auth/AvatarPlaceholder.svelte';
 	import LocalText from '$lib/localization/LocalText.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
+	import Card from '$lib/components/ui/Card.svelte';
+	import FormField from '$lib/components/ui/FormField.svelte';
+	import { localText } from '$lib/localization/dictionary.svelte';
 
 	interface Props {
 		data: PageData;
@@ -50,7 +54,7 @@
 	<div class="mx-auto max-w-2xl space-y-6">
 
 		<!-- Profile header card -->
-		<div class="rounded-lg bg-white p-6 shadow-md">
+		<Card>
 			<div class="flex items-center gap-5">
 				{#if avatarUrl}
 					<img
@@ -75,10 +79,10 @@
 					{/if}
 				</div>
 			</div>
-		</div>
+		</Card>
 
 		<!-- Personal information card -->
-		<div class="rounded-lg bg-white p-6 shadow-md">
+		<Card>
 			<h2 class="mb-4 text-lg font-semibold text-gray-900">
 				<LocalText slug="profile_personal_info_heading" />
 			</h2>
@@ -94,57 +98,51 @@
 			{/if}
 
 			<form method="POST" action="?/updateProfile" use:enhance={handleUpdate} class="space-y-4">
-				<div>
-					<label for="displayName" class="mb-2 block text-sm font-medium text-gray-700">
-						<LocalText slug="profile_display_name_label" />
-					</label>
-					<input
-						id="displayName"
-						name="displayName"
-						type="text"
-						placeholder="Your name"
-						value={form?.errors ? (form as Record<string, unknown>).displayName ?? displayName : displayName}
-						class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
-					/>
-					{#if form?.errors?.displayName}
-						<p class="mt-1.5 text-sm text-red-600">{form.errors.displayName}</p>
-					{/if}
-				</div>
+				<FormField error={form?.errors?.displayName}>
+					{#snippet label()}
+						<label for="displayName"><LocalText slug="profile_display_name_label" /></label>
+					{/snippet}
+					{#snippet input()}
+						<input
+							id="displayName"
+							name="displayName"
+							type="text"
+							placeholder="Your name"
+							value={form?.errors ? (form as Record<string, unknown>).displayName ?? displayName : displayName}
+							class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
+						/>
+					{/snippet}
+				</FormField>
 
-				<div>
-					<label for="profile_email_display" class="mb-2 block text-sm font-medium text-gray-700">
-						<LocalText slug="common_email_label" />
-					</label>
-					<input
-						id="profile_email_display"
-						type="email"
-						value={user?.email ?? ''}
-						disabled
-						class="block w-full cursor-not-allowed rounded-lg border border-gray-200 bg-gray-100 p-2.5 text-sm text-gray-500"
-					/>
-					<p class="mt-1 text-xs text-gray-400">
-						<LocalText slug="profile_email_hint" />
-					</p>
-				</div>
+				<FormField disabled hint={localText('profile_email_hint')}>
+					{#snippet label()}
+						<label for="profile_email_display"><LocalText slug="common_email_label" /></label>
+					{/snippet}
+					{#snippet input()}
+						<input
+							id="profile_email_display"
+							type="email"
+							value={user?.email ?? ''}
+							disabled
+							class="block w-full cursor-not-allowed rounded-lg border border-gray-200 bg-gray-100 p-2.5 text-sm text-gray-500"
+						/>
+					{/snippet}
+				</FormField>
 
 				<div class="flex justify-end">
-					<button
-						type="submit"
-						disabled={saving}
-						class="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:cursor-not-allowed disabled:opacity-60"
-					>
+					<Button type="submit" variant="primary" loading={saving}>
 						{#if saving}
 							<LocalText slug="common_saving" />
 						{:else}
 							<LocalText slug="profile_save_button" />
 						{/if}
-					</button>
+					</Button>
 				</div>
 			</form>
-		</div>
+		</Card>
 
-		<!-- Danger zone -->
-		<div class="rounded-lg border border-gray-200 bg-white p-6 shadow-md">
+		<!-- Account card -->
+		<Card variant="outlined">
 			<h2 class="mb-1 text-lg font-semibold text-gray-900">
 				<LocalText slug="profile_account_heading" />
 			</h2>
@@ -152,19 +150,15 @@
 				<LocalText slug="profile_account_subtitle" />
 			</p>
 			<form method="POST" action="?/signOut" use:enhance={handleSignOut}>
-				<button
-					type="submit"
-					disabled={signingOut}
-					class="rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-100 disabled:cursor-not-allowed disabled:opacity-60"
-				>
+				<Button type="submit" variant="secondary" loading={signingOut}>
 					{#if signingOut}
 						<LocalText slug="profile_signing_out_button" />
 					{:else}
 						<LocalText slug="profile_sign_out_button" />
 					{/if}
-				</button>
+				</Button>
 			</form>
-		</div>
+		</Card>
 
 	</div>
 </div>

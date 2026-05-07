@@ -1,13 +1,10 @@
-<div class="bg-neutral-secondary-medium relative h-10 w-10 overflow-hidden rounded-full">
-	<svg
-		class="text-body-subtle absolute -left-1 h-12 w-12"
-		fill="currentColor"
-		viewBox="0 0 20 20"
-		xmlns="http://www.w3.org/2000/svg"
-		><path
-			fill-rule="evenodd"
-			d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-			clip-rule="evenodd"
-		></path></svg
-	>
+<script lang="ts">
+	import Icon from '$lib/components/ui/Icon.svelte';
+	import { faUser } from '@fortawesome/free-solid-svg-icons';
+</script>
+
+<div class="relative h-10 w-10 overflow-hidden rounded-full bg-gray-200">
+	<div class="absolute inset-0 flex items-center justify-center text-gray-400">
+		<Icon icon={faUser} class="h-6 w-6" />
+	</div>
 </div>
