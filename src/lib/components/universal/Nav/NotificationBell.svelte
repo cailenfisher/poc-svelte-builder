@@ -2,6 +2,7 @@
 	import type { Notification } from '$lib/types/notification';
 	import Icon from '$lib/components/ui/Icon.svelte';
 	import { faBell, faXmark } from '@fortawesome/free-solid-svg-icons';
+	import LocalText from '$lib/localization/LocalText.svelte';
 
 	let { notifications = [] }: { notifications: Notification[] } = $props();
 
@@ -56,7 +57,11 @@
 			if (!node.contains(e.target as Node)) open = false;
 		}
 		document.addEventListener('click', handle, true);
-		return { destroy() { document.removeEventListener('click', handle, true); } };
+		return {
+			destroy() {
+				document.removeEventListener('click', handle, true);
+			}
+		};
 	}
 </script>
 
@@ -76,16 +81,18 @@
 	{#if open}
 		<div class="notif-dropdown">
 			<div class="notif-header">
-				<span class="text-sm font-semibold text-gray-900">Notifications</span>
+				<span class="text-sm font-semibold text-gray-900"
+					><LocalText slug="notification_count" values={{ count: unreadCount }} /></span
+				>
 				{#if unreadCount > 0}
 					<button type="button" class="text-xs text-blue-600 hover:underline" onclick={markAllRead}>
-						Mark all read
+						<LocalText slug="notification_clear_all" />
 					</button>
 				{/if}
 			</div>
 
 			{#if items.length === 0}
-				<p class="notif-empty">No notifications</p>
+				<p class="notif-empty"><LocalText slug="notification_empty" /></p>
 			{:else}
 				<ul class="notif-list">
 					{#each items as item (item.id)}
@@ -93,14 +100,13 @@
 							<button
 								type="button"
 								class="flex flex-1 items-start gap-3 text-left"
-								onclick={() => { if (!item.is_read) markRead(item.id); }}
+								onclick={() => {
+									if (!item.is_read) markRead(item.id);
+								}}
 							>
 								<span class="notif-dot notif-dot-{item.type}"></span>
 								<div class="min-w-0 flex-1">
-									<p
-										class="text-sm leading-snug text-gray-800"
-										class:font-medium={!item.is_read}
-									>
+									<p class="text-sm leading-snug text-gray-800" class:font-medium={!item.is_read}>
 										{item.message}
 									</p>
 									<p class="mt-0.5 text-xs text-gray-400">{timeAgo(item.created_at)}</p>
@@ -108,11 +114,11 @@
 							</button>
 							<button
 								type="button"
-								class="ml-1 mt-0.5 shrink-0 p-0.5 text-gray-300 hover:text-gray-500"
+								class="mt-0.5 ml-1 shrink-0 p-0.5 text-gray-300 hover:text-gray-500"
 								onclick={() => dismiss(item.id)}
 								aria-label="Dismiss"
 							>
-								<Icon icon={faXmark} class="w-3 h-3" />
+								<Icon icon={faXmark} class="h-3 w-3" />
 							</button>
 						</li>
 					{/each}
