@@ -5,19 +5,12 @@ export const load: PageServerLoad = async ({ locals: { supabase }, params }) => 
 	const id = Number(params.id);
 
 	const [linkRes, localesRes, translationsRes] = await Promise.all([
-		supabase
-			.from('local_text_link')
-			.select('id, slug, title, scope')
-			.eq('id', id)
-			.single(),
-		supabase
-			.from('locale')
-			.select('id, code, name, native_name, dir')
-			.order('name'),
+		supabase.from('local_text_link').select('id, slug, title, scope').eq('id', id).single(),
+		supabase.from('locale').select('id, code, name, native_name, dir').order('name'),
 		supabase
 			.from('local_text')
-			.select('id, content, locale!inner(id, code)')
-			.eq('link', id),
+			.select('id, content, locale!inner(id, code, name, native_name, dir)')
+			.eq('link', id)
 	]);
 
 	if (linkRes.error || !linkRes.data) {
@@ -35,7 +28,7 @@ export const load: PageServerLoad = async ({ locals: { supabase }, params }) => 
 	return {
 		link: linkRes.data,
 		locales: localesRes.data ?? [],
-		translations: translationsRes.data ?? [],
+		translations: translationsRes.data ?? []
 	};
 };
 
@@ -61,38 +54,54 @@ export const actions: Actions = {
 			return fail(500, { errors: { general: 'Failed to update content link.' } });
 		}
 
-		return { success: true, action: 'link', message: 'Link updated.' };
+		return { success: true, action: 'link' as const };
 	},
 
-	upsertTranslations: async ({ request, locals: { supabase }, params }) => {
+	upsertTranslation: async ({ request, locals: { supabase }, params }) => {
 		const linkId = Number(params.id);
 		const formData = await request.formData();
+		const localeId = Number(formData.get('locale_id'));
+		const content = (formData.get('content') as string)?.trim();
 
-		const rows: { link: number; locale: number; content: string }[] = [];
-
-		for (const [key, value] of formData.entries()) {
-			if (key.startsWith('content_')) {
-				const localeId = Number(key.replace('content_', ''));
-				const content = (value as string).trim();
-				if (content) {
-					rows.push({ link: linkId, locale: localeId, content });
-				}
-			}
+		if (!localeId || !content) {
+			return fail(400, { errors: { general: 'Locale and content are required.' } });
 		}
 
-		if (rows.length === 0) {
-			return { success: true, action: 'translations', message: 'No changes to save.' };
-		}
-
-		const { error: err } = await supabase
+		const { data: existing } = await supabase
 			.from('local_text')
-			.upsert(rows, { onConflict: 'link,locale' });
+			.select('id')
+			.eq('link', linkId)
+			.eq('locale', localeId)
+			.maybeSingle();
+
+		const upsertResult = existing
+			? await supabase.from('local_text').update({ content: content }).eq('id', existing.id)
+			: await supabase.from('local_text').insert({ link: linkId, locale: localeId, content });
+
+		if (upsertResult.error) {
+			console.error(
+				'admin/content/[id] upsertTranslation - error saving translation',
+				upsertResult.error
+			);
+			return fail(500, { errors: { general: 'Failed to save translation.' } });
+		}
+
+		return { success: true, action: 'translation' as const, savedLocaleId: localeId };
+	},
+
+	deleteTranslation: async ({ request, locals: { supabase } }) => {
+		const formData = await request.formData();
+		const id = Number(formData.get('translation_id'));
+
+		if (!id) return fail(400, { errors: { general: 'Invalid translation ID.' } });
+
+		const { error: err } = await supabase.from('local_text').delete().eq('id', id);
 
 		if (err) {
-			console.error('admin/content/[id] upsertTranslations - error upserting translations', err);
-			return fail(500, { errors: { general: 'Failed to save translations.' } });
+			console.error('admin/content/[id] deleteTranslation - error deleting translation', err);
+			return fail(500, { errors: { general: 'Failed to remove translation.' } });
 		}
 
-		return { success: true, action: 'translations', message: 'Translations saved.' };
-	},
+		return { success: true, action: 'delete' as const };
+	}
 };
