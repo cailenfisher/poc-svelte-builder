@@ -17,14 +17,14 @@
 </script>
 
 <div>
-	<div class={['mb-2 text-sm font-medium', disabled ? 'text-gray-400' : 'text-gray-700'].join(' ')}>
+	<div class="mb-2 field-label {disabled ? 'text-gray-400' : 'text-gray-700'}">
 		{@render label()}
 	</div>
 	{@render input()}
 	{#if error}
-		<p class="mt-1.5 text-sm text-red-600">{error}</p>
+		<p class="field-error">{error}</p>
 	{/if}
 	{#if hint}
-		<p class="mt-1 text-xs text-gray-400">{hint}</p>
+		<p class="field-hint">{hint}</p>
 	{/if}
 </div>

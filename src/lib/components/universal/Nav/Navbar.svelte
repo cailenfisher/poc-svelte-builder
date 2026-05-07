@@ -7,8 +7,8 @@
 	let { session }: { session: Session | null } = $props();
 </script>
 
-<nav class="mb-6 flex items-center justify-between rounded-lg border border-gray-200 bg-white px-5 py-3 shadow-sm">
-	<a href="/" class="text-base font-semibold text-gray-900 hover:text-blue-600">
+<nav class="navbar">
+	<a href="/" class="navbar-brand">
 		<LocalText slug="nav_brand" />
 	</a>
 	<div class="flex items-center gap-4">
@@ -17,8 +17,8 @@
 				<LocalText slug="nav_sign_in" />
 			</Button>
 		{:else}
-			<a href="/admin" class="text-sm text-gray-500 hover:text-gray-900">Admin</a>
-			<a href="/profile" class="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
+			<a href="/admin" class="back-link">Admin</a>
+			<a href="/profile" class="flex items-center gap-2">
 				<ProfileSummaryWidget {session} />
 			</a>
 		{/if}

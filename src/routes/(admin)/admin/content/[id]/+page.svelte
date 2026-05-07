@@ -36,8 +36,8 @@
 
 <div class="max-w-2xl space-y-6">
 	<div>
-		<a href="/admin/content" class="text-sm text-blue-600 hover:underline">← Back to content</a>
-		<h1 class="mt-2 text-2xl font-bold text-gray-900">Edit content link</h1>
+		<a href="/admin/content" class="back-link">← Back to content</a>
+		<h1 class="mt-2 page-title">Edit content link</h1>
 	</div>
 
 	{#if form?.errors?.general}
@@ -47,44 +47,22 @@
 		<Alert variant="success">{form.message}</Alert>
 	{/if}
 
-	<!-- Link metadata -->
 	<Card>
-		<h2 class="mb-4 text-base font-semibold text-gray-900">Link details</h2>
+		<h2 class="mb-4 card-title">Link details</h2>
 		<form method="POST" action="?/updateLink" use:enhance={handleLink} class="space-y-4">
 			<div>
-				<label for="slug" class="mb-1 block text-sm font-medium text-gray-700">Slug</label>
-				<input
-					id="slug"
-					name="slug"
-					type="text"
-					value={link.slug}
-					required
-					class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm font-mono focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
-				/>
+				<label for="slug" class="mb-1 field-label text-gray-700">Slug</label>
+				<input id="slug" name="slug" type="text" value={link.slug} required class="field-control font-mono" />
 			</div>
 			<div>
-				<label for="title" class="mb-1 block text-sm font-medium text-gray-700">Title</label>
-				<input
-					id="title"
-					name="title"
-					type="text"
-					value={link.title}
-					required
-					class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
-				/>
+				<label for="title" class="mb-1 field-label text-gray-700">Title</label>
+				<input id="title" name="title" type="text" value={link.title} required class="field-control" />
 			</div>
 			<div>
-				<label for="scope" class="mb-1 block text-sm font-medium text-gray-700">
+				<label for="scope" class="mb-1 field-label text-gray-700">
 					Scope <span class="font-normal text-gray-400">(leave empty for global)</span>
 				</label>
-				<input
-					id="scope"
-					name="scope"
-					type="text"
-					value={link.scope ?? ''}
-					placeholder="e.g. profile"
-					class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
-				/>
+				<input id="scope" name="scope" type="text" value={link.scope ?? ''} placeholder="e.g. profile" class="field-control" />
 			</div>
 			<div class="flex justify-end">
 				<Button type="submit" variant="primary" loading={savingLink}>Save link</Button>
@@ -92,25 +70,26 @@
 		</form>
 	</Card>
 
-	<!-- Translations -->
 	<Card>
-		<h2 class="mb-4 text-base font-semibold text-gray-900">Translations</h2>
+		<h2 class="mb-4 card-title">Translations</h2>
 		{#if locales.length === 0}
-			<p class="text-sm text-gray-500">No locales defined. <a href="/admin/locale" class="text-blue-600 hover:underline">Add a locale</a> first.</p>
+			<p class="page-subtitle">
+				No locales defined. <a href="/admin/locale" class="link">Add a locale</a> first.
+			</p>
 		{:else}
 			<form method="POST" action="?/upsertTranslations" use:enhance={handleTranslations} class="space-y-5">
 				{#each locales as locale}
 					<div>
-						<label for="content_{locale.id}" class="mb-1 flex items-baseline gap-2 text-sm font-medium text-gray-700">
+						<label for="content_{locale.id}" class="mb-1 field-label flex items-baseline gap-2 text-gray-700">
 							{locale.name}
-							<span class="font-normal text-gray-400 text-xs">{locale.native_name} · {locale.code}</span>
+							<span class="font-normal text-xs text-gray-400">{locale.native_name} · {locale.code}</span>
 						</label>
 						<textarea
 							id="content_{locale.id}"
 							name="content_{locale.id}"
 							rows="2"
 							dir={locale.dir ?? 'ltr'}
-							class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
+							class="field-control"
 						>{getTranslation(locale.id)}</textarea>
 					</div>
 				{/each}

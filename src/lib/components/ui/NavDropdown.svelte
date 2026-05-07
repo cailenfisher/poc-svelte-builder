@@ -21,11 +21,7 @@
 </script>
 
 <div>
-	<button
-		type="button"
-		onclick={() => (open = !open)}
-		class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900"
-	>
+	<button type="button" onclick={() => (open = !open)} class="nav-dropdown-btn">
 		{#if icon}
 			<Icon {icon} fixedWidth />
 		{/if}

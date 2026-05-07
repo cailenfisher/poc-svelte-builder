@@ -1,3 +1,269 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+@layer components {
+	/* ================================================
+     TYPOGRAPHY
+     ================================================ */
+
+	.page-title {
+		@apply text-2xl font-bold text-gray-900;
+	}
+	.page-subtitle {
+		@apply text-sm text-gray-500;
+	}
+	.card-title {
+		@apply text-base font-semibold text-gray-900;
+	}
+	.section-title {
+		@apply text-lg font-semibold text-gray-900;
+	}
+
+	/* stat card */
+	.stat-label {
+		@apply text-sm font-medium text-gray-500;
+	}
+	.stat-number {
+		@apply text-3xl font-bold text-gray-900;
+	}
+
+	/* links */
+	.back-link {
+		@apply text-sm text-blue-600 hover:underline;
+	}
+	.link-action {
+		@apply text-sm text-blue-600 hover:underline;
+	}
+	.link-action-danger {
+		@apply text-sm text-red-500 hover:underline;
+	}
+	.link {
+		@apply text-blue-600 hover:underline;
+	}
+
+	/* ================================================
+     BUTTONS
+     ================================================ */
+
+	.btn {
+		@apply inline-flex items-center justify-center gap-2 rounded-lg font-medium focus:ring-4 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60;
+	}
+
+	.btn-primary {
+		@apply border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-300;
+	}
+	.btn-secondary {
+		@apply border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-gray-100;
+	}
+	.btn-danger {
+		@apply border border-transparent bg-red-600 text-white hover:bg-red-700 focus:ring-red-300;
+	}
+
+	.btn-sm {
+		@apply px-4 py-2 text-sm;
+	}
+	.btn-md {
+		@apply px-5 py-2.5 text-sm;
+	}
+
+	/* ================================================
+     CARDS
+     ================================================ */
+
+	.card {
+		@apply rounded-lg bg-white shadow-sm;
+	}
+	.card-outlined {
+		@apply rounded-lg border border-gray-200 bg-white shadow-sm;
+	}
+
+	/* ================================================
+     FORM CONTROLS
+     ================================================ */
+
+	/* Label: no margin (caller adds mb-1 / mb-2 contextually), no color (caller adds) */
+	.field-label {
+		@apply block text-sm font-medium;
+	}
+	.field-label-xs {
+		@apply block text-xs font-medium text-gray-600;
+	}
+
+	/* Universal input / select / textarea */
+	.field-control {
+		@apply block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-500;
+	}
+
+	.field-error {
+		@apply mt-1.5 text-sm text-red-600;
+	}
+	.field-hint {
+		@apply mt-1 text-xs text-gray-400;
+	}
+
+	/* ================================================
+     ALERTS
+     ================================================ */
+
+	.alert {
+		@apply flex items-start gap-3 rounded-lg border p-4 text-sm;
+	}
+	.alert-error {
+		@apply border-red-200 bg-red-50 text-red-800;
+	}
+	.alert-warning {
+		@apply border-yellow-200 bg-yellow-50 text-yellow-800;
+	}
+	.alert-info {
+		@apply border-blue-200 bg-blue-50 text-blue-800;
+	}
+	.alert-success {
+		@apply border-green-200 bg-green-50 text-green-800;
+	}
+
+	.alert-icon {
+		@apply mt-0.5 shrink-0;
+	}
+	.alert-icon-error {
+		@apply text-red-500;
+	}
+	.alert-icon-warning {
+		@apply text-yellow-500;
+	}
+	.alert-icon-info {
+		@apply text-blue-500;
+	}
+	.alert-icon-success {
+		@apply text-green-500;
+	}
+
+	/* ================================================
+     DATA TABLE
+     ================================================ */
+
+	.data-table-wrapper {
+		@apply overflow-x-auto rounded-lg border border-gray-200;
+	}
+	.data-table {
+		@apply w-full text-left text-sm text-gray-700;
+	}
+	.data-table-head {
+		@apply bg-gray-50 text-xs font-semibold tracking-wide text-gray-500 uppercase;
+	}
+	.data-table-body {
+		@apply divide-y divide-gray-100;
+	}
+	.data-table-th {
+		@apply px-4 py-3;
+	}
+	.data-table-td {
+		@apply px-4 py-3;
+	}
+	.data-table-row {
+		@apply hover:bg-gray-50;
+	}
+	.data-table-sort-btn {
+		@apply flex items-center gap-1 hover:text-gray-900;
+	}
+	.data-table-empty {
+		@apply px-4 py-8 text-center text-gray-400;
+	}
+
+	/* ================================================
+     NAVBAR
+     ================================================ */
+
+	.navbar {
+		@apply mb-6 flex items-center justify-between rounded-lg border border-gray-200 bg-white px-5 py-3 shadow-2xs;
+	}
+	.navbar-brand {
+		@apply text-base font-semibold text-gray-900 hover:text-blue-600;
+	}
+
+	/* ================================================
+     SIDEBAR NAV LINKS
+     ================================================ */
+
+	.nav-link {
+		@apply flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900;
+	}
+	.nav-link-active {
+		@apply bg-blue-50 text-blue-700;
+	}
+
+	.nav-dropdown-btn {
+		@apply flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900;
+	}
+
+	/* ================================================
+     ADMIN SHELL
+     ================================================ */
+
+	.admin-shell {
+		@apply flex min-h-screen bg-gray-50;
+	}
+	.admin-sidebar {
+		@apply flex w-64 shrink-0 flex-col border-r border-gray-200 bg-white;
+	}
+	.admin-sidebar-header {
+		@apply flex h-16 items-center border-b border-gray-200 px-5;
+	}
+	.admin-sidebar-nav {
+		@apply flex-1 space-y-1 overflow-y-auto p-3;
+	}
+	.admin-sidebar-footer {
+		@apply border-t border-gray-200 p-3;
+	}
+	.admin-main {
+		@apply flex-1 overflow-auto p-6;
+	}
+	.admin-badge {
+		@apply ml-2 rounded bg-blue-100 px-1.5 py-0.5 text-xs font-medium text-blue-700;
+	}
+
+	/* ================================================
+     AUTH LAYOUT
+     ================================================ */
+
+	.auth-page {
+		@apply flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 py-8;
+	}
+	.auth-divider {
+		@apply flex items-center;
+	}
+	.auth-divider-line {
+		@apply h-px flex-1 bg-gray-200;
+	}
+	.auth-divider-text {
+		@apply px-3 text-sm text-gray-400;
+	}
+
+	/* ================================================
+     BADGES
+     ================================================ */
+
+	.badge {
+		@apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+	}
+	.badge-blue {
+		@apply bg-blue-50 text-blue-700;
+	}
+	.badge-gray {
+		@apply bg-gray-100 text-gray-600;
+	}
+
+	/* ================================================
+     AVATAR
+     ================================================ */
+
+	.avatar {
+		@apply rounded-full object-cover;
+	}
+	.avatar-placeholder {
+		@apply relative overflow-hidden rounded-full bg-gray-200;
+	}
+	.avatar-placeholder-icon {
+		@apply absolute inset-0 flex items-center justify-center text-gray-400;
+	}
+}

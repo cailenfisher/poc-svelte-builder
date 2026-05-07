@@ -17,7 +17,6 @@
 	});
 
 	onMount(() => {
-		console.log('session', session);
 		const { data } = supabase.auth.onAuthStateChange((_event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth');
@@ -30,7 +29,7 @@
 
 <svelte:head><title>Svelte Builder POC</title></svelte:head>
 
-<div class="h-screen w-screen p-6">
+<div class="min-h-screen bg-gray-50 p-6">
 	{#if dictionaryLoaded || !enableLocalization}
 		<Navbar {session} />
 		{@render children()}

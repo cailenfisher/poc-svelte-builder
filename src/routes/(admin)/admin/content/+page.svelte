@@ -39,8 +39,8 @@
 
 <div class="space-y-6">
 	<div>
-		<h1 class="text-2xl font-bold text-gray-900">Content</h1>
-		<p class="mt-1 text-sm text-gray-500">Manage translatable content links and their translations.</p>
+		<h1 class="page-title">Content</h1>
+		<p class="mt-1 page-subtitle">Manage translatable content links and their translations.</p>
 	</div>
 
 	{#if form?.errors?.general}
@@ -50,73 +50,60 @@
 		<Alert variant="success">Content link created.</Alert>
 	{/if}
 
-	<!-- Create form -->
 	<Card>
-		<h2 class="mb-4 text-base font-semibold text-gray-900">Add content link</h2>
-		<form method="POST" action="?/create" use:enhance={() => {
-			creating = true;
-			return async ({ update }) => { await update(); creating = false; };
-		}} class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+		<h2 class="mb-4 card-title">Add content link</h2>
+		<form
+			method="POST"
+			action="?/create"
+			use:enhance={() => {
+				creating = true;
+				return async ({ update }) => { await update(); creating = false; };
+			}}
+			class="grid grid-cols-1 gap-3 sm:grid-cols-3"
+		>
 			<div>
-				<label for="slug" class="mb-1 block text-xs font-medium text-gray-600">Slug</label>
-				<input
-					id="slug"
-					name="slug"
-					type="text"
-					placeholder="nav_sign_in"
-					required
-					class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
-				/>
+				<label for="slug" class="mb-1 field-label-xs">Slug</label>
+				<input id="slug" name="slug" type="text" placeholder="nav_sign_in" required class="field-control" />
 			</div>
 			<div>
-				<label for="title" class="mb-1 block text-xs font-medium text-gray-600">Title</label>
-				<input
-					id="title"
-					name="title"
-					type="text"
-					placeholder="Nav: Sign in button"
-					required
-					class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
-				/>
+				<label for="title" class="mb-1 field-label-xs">Title</label>
+				<input id="title" name="title" type="text" placeholder="Nav: Sign in button" required class="field-control" />
 			</div>
 			<div>
-				<label for="scope" class="mb-1 block text-xs font-medium text-gray-600">Scope (optional)</label>
-				<input
-					id="scope"
-					name="scope"
-					type="text"
-					placeholder="profile"
-					class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
-				/>
+				<label for="scope" class="mb-1 field-label-xs">Scope <span class="font-normal text-gray-400">(optional)</span></label>
+				<input id="scope" name="scope" type="text" placeholder="profile" class="field-control" />
 			</div>
-			<div class="sm:col-span-3 flex justify-end">
+			<div class="flex justify-end sm:col-span-3">
 				<Button type="submit" variant="primary" loading={creating}>Add link</Button>
 			</div>
 		</form>
 	</Card>
 
-	<!-- List -->
-	<DataTable items={links as unknown as Record<string, unknown>[]} {columns} filterFn={filterLinks as (item: Record<string, unknown>, q: string) => boolean}>
+	<DataTable
+		items={links as unknown as Record<string, unknown>[]}
+		{columns}
+		filterFn={filterLinks as (item: Record<string, unknown>, q: string) => boolean}
+	>
 		{#snippet row(item)}
 			{@const link = item as unknown as Link}
-			<tr class="hover:bg-gray-50">
-				<td class="px-4 py-3 font-mono text-xs text-gray-600">{link.slug}</td>
-				<td class="px-4 py-3 text-gray-900">{link.title}</td>
-				<td class="px-4 py-3">
+			<tr class="data-table-row">
+				<td class="data-table-td font-mono text-xs text-gray-600">{link.slug}</td>
+				<td class="data-table-td text-gray-900">{link.title}</td>
+				<td class="data-table-td">
 					{#if link.scope}
-						<span class="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">{link.scope}</span>
+						<span class="badge badge-gray">{link.scope}</span>
 					{:else}
-						<span class="text-gray-400 text-xs">global</span>
+						<span class="text-xs text-gray-400">global</span>
 					{/if}
 				</td>
-				<td class="px-4 py-3 text-right">
+				<td class="data-table-td text-right">
 					<div class="flex justify-end gap-2">
-						<a href="/admin/content/{link.id}" class="text-sm text-blue-600 hover:underline">Translations</a>
+						<a href="/admin/content/{link.id}" class="link-action">Translations</a>
 						<form method="POST" action="?/delete" use:enhance>
 							<input type="hidden" name="id" value={link.id} />
 							<button
 								type="submit"
-								class="text-sm text-red-500 hover:underline"
+								class="link-action-danger"
 								onclick={(e) => { if (!confirm(`Delete "${link.slug}"?`)) e.preventDefault(); }}
 							>
 								Delete
