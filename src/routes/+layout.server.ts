@@ -1,3 +1,4 @@
+import type { Notification } from '$lib/types/notification';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ locals: { safeGetSession, supabase }, cookies, fetch }) => {
@@ -17,11 +18,23 @@ export const load: LayoutServerLoad = async ({ locals: { safeGetSession, supabas
 		.eq('is_published', true)
 		.order('sort_order');
 
+	let notifications: Notification[] = [];
+	if (user?.id) {
+		const { data: notifData } = await supabase
+			.from('notification')
+			.select('id, user_id, message, type, is_read, created_at')
+			.eq('user_id', user.id)
+			.order('created_at', { ascending: false })
+			.limit(20);
+		notifications = (notifData ?? []) as Notification[];
+	}
+
 	return {
 		session,
 		user,
 		cookies: cookies.getAll(),
 		dictionaryPayload,
-		navItems: navItems ?? []
+		navItems: navItems ?? [],
+		notifications
 	};
 };

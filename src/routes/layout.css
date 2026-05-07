@@ -255,8 +255,55 @@
 	.badge-blue {
 		@apply bg-blue-50 text-blue-700;
 	}
+	.badge-green {
+		@apply bg-green-50 text-green-700;
+	}
 	.badge-gray {
 		@apply bg-gray-100 text-gray-600;
+	}
+
+	/* ================================================
+     NOTIFICATION BELL
+     ================================================ */
+
+	.notif-bell-btn {
+		@apply relative p-1.5 text-gray-500 transition-colors hover:text-gray-800;
+	}
+	.notif-badge {
+		@apply absolute -right-0.5 -top-0.5 flex h-[1.1rem] min-w-[1.1rem] items-center justify-center rounded-full bg-red-500 px-0.5 text-[10px] font-bold leading-none text-white;
+	}
+	.notif-dropdown {
+		@apply absolute right-0 top-full z-50 mt-2 w-80 rounded-md border border-gray-200 bg-white shadow-lg;
+	}
+	.notif-header {
+		@apply flex items-center justify-between border-b border-gray-100 px-4 py-3;
+	}
+	.notif-list {
+		@apply max-h-80 divide-y divide-gray-50 overflow-y-auto;
+	}
+	.notif-item {
+		@apply flex cursor-pointer items-start gap-3 px-4 py-3 transition-colors hover:bg-gray-50;
+	}
+	.notif-item-unread {
+		@apply bg-blue-50/40;
+	}
+	.notif-dot {
+		@apply mt-1.5 h-2 w-2 shrink-0 rounded-full;
+	}
+	.notif-dot-info {
+		@apply bg-blue-500;
+	}
+	.notif-dot-success {
+		@apply bg-green-500;
+	}
+	.notif-dot-warning {
+		@apply bg-amber-500;
+	}
+	.notif-dot-error {
+		@apply bg-red-500;
+	}
+	.notif-empty {
+		@apply px-4 py-8 text-center text-sm text-gray-400;
 	}
 
 	/* ================================================
