@@ -1,7 +1,17 @@
 <script lang="ts">
-	import LocalText from '$lib/localization/LocalText.svelte';
+	import { untrack } from 'svelte';
+	import { mergeDictionary } from '$lib/localization/dictionary.svelte';
+	import type { PageData } from './$types';
+	import BlogFeed from '$lib/components/universal/Blog/BlogFeed.svelte';
+	import type { Post } from '$lib/types/blog';
+
+	let { data }: { data: PageData } = $props();
+	let { posts, blogContent } = $derived(data);
+
+	$effect(() => {
+		const content = blogContent;
+		if (content?.length) untrack(() => mergeDictionary(content));
+	});
 </script>
 
-<div class="p-10">
-	<LocalText slug="hello_world" values={{ count: 9 }} />
-</div>
+<BlogFeed posts={posts as unknown as Post[]} />
