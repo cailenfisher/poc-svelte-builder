@@ -40,6 +40,10 @@ export function getContentBySlug(slug: string): LocalText | undefined {
 	return getContent(slug);
 }
 
+export function getActiveLocaleCode(): string {
+	return dictionary?.[0]?.locale.code ?? PUBLIC_APPLICATION_DEFAULT_LANGUAGE;
+}
+
 // Inline API for use outside Svelte components.
 // Returns the slug itself when content is missing so gaps are visible in development.
 export function localText(

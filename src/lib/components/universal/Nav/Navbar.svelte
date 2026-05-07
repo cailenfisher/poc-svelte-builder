@@ -17,6 +17,7 @@
 				<LocalText slug="nav_sign_in" />
 			</Button>
 		{:else}
+			<a href="/admin" class="text-sm text-gray-500 hover:text-gray-900">Admin</a>
 			<a href="/profile" class="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
 				<ProfileSummaryWidget {session} />
 			</a>
