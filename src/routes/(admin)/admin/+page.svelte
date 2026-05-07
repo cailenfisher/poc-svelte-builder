@@ -4,6 +4,7 @@
 	import Card from '$lib/components/ui/Card.svelte';
 	import Alert from '$lib/components/ui/Alert.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import { localText } from '$lib/localization/dictionary.svelte';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 	let { stats } = $derived(data);
@@ -12,7 +13,7 @@
 </script>
 
 <svelte:head>
-	<title>Admin Dashboard</title>
+	<title>{localText('page_title_admin_dashboard')}</title>
 </svelte:head>
 
 <div class="space-y-6">

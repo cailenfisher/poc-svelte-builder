@@ -3,7 +3,7 @@
 	import './layout.css';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { loadDictionary } from '$lib/localization/dictionary.svelte';
+	import { loadDictionary, localText } from '$lib/localization/dictionary.svelte';
 	import Navbar from '$lib/components/universal/Nav/Navbar.svelte';
 
 	let { data, children } = $props();
@@ -27,7 +27,7 @@
 	});
 </script>
 
-<svelte:head><title>Svelte Builder POC</title></svelte:head>
+<svelte:head><title>{localText('site_name')}</title></svelte:head>
 
 <div class="min-h-screen bg-gray-50 p-6">
 	{#if dictionaryLoaded || !enableLocalization}

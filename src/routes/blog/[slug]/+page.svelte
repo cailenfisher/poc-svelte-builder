@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { untrack } from 'svelte';
-	import { mergeDictionary } from '$lib/localization/dictionary.svelte';
+	import { mergeDictionary, localText } from '$lib/localization/dictionary.svelte';
 	import type { PageData } from './$types';
 	import type { Post } from '$lib/types/blog';
 	import LocalText from '$lib/localization/LocalText.svelte';
@@ -17,7 +17,7 @@
 </script>
 
 <svelte:head>
-	<title>Blog</title>
+	<title>{localText('post_title', undefined, 'blog', typedPost.id)}</title>
 </svelte:head>
 
 <article class="mx-auto max-w-2xl space-y-6">

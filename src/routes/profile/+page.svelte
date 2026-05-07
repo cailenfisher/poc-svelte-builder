@@ -48,7 +48,7 @@
 </script>
 
 <svelte:head>
-	<title>Profile</title>
+	<title>{localText('page_title_profile')}</title>
 </svelte:head>
 
 <div class="mx-auto max-w-2xl space-y-6">

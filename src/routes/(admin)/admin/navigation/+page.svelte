@@ -6,6 +6,7 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import Alert from '$lib/components/ui/Alert.svelte';
 	import Card from '$lib/components/ui/Card.svelte';
+	import { localText } from '$lib/localization/dictionary.svelte';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 	let { navItems } = $derived(data);
@@ -28,7 +29,7 @@
 </script>
 
 <svelte:head>
-	<title>Navigation — Admin</title>
+	<title>{localText('page_title_admin_navigation')}</title>
 </svelte:head>
 
 <div class="space-y-6">

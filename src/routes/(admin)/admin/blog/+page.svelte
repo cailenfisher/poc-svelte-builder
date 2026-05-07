@@ -4,6 +4,7 @@
 	import Card from '$lib/components/ui/Card.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Alert from '$lib/components/ui/Alert.svelte';
+	import { localText } from '$lib/localization/dictionary.svelte';
 
 	type Post = {
 		id: number;
@@ -20,13 +21,13 @@
 </script>
 
 <svelte:head>
-	<title>Blog — Admin</title>
+	<title>{localText('page_title_admin_blog')}</title>
 </svelte:head>
 
 <div class="space-y-6">
 	<div>
 		<h1 class="page-title">Blog posts</h1>
-		<p class="mt-1 page-subtitle">Create and manage blog posts.</p>
+		<p class="page-subtitle mt-1">Create and manage blog posts.</p>
 	</div>
 
 	{#if form?.errors?.general}
@@ -34,7 +35,7 @@
 	{/if}
 
 	<Card>
-		<h2 class="mb-4 card-title">Create post</h2>
+		<h2 class="card-title mb-4">Create post</h2>
 		<form
 			method="POST"
 			action="?/create"
@@ -48,7 +49,7 @@
 			class="flex items-end gap-3"
 		>
 			<div class="flex-1">
-				<label for="slug" class="mb-1 field-label-xs">Slug</label>
+				<label for="slug" class="field-label-xs mb-1">URL Slug</label>
 				<input
 					id="slug"
 					name="slug"

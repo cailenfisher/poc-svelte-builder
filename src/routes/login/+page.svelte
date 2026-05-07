@@ -8,6 +8,7 @@
 	import Alert from '$lib/components/ui/Alert.svelte';
 	import Icon from '$lib/components/ui/Icon.svelte';
 	import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+	import { localText } from '$lib/localization/dictionary.svelte';
 
 	interface Props {
 		form: ActionData;
@@ -25,7 +26,7 @@
 </script>
 
 <svelte:head>
-	<title>Sign In</title>
+	<title>{localText('page_title_login')}</title>
 </svelte:head>
 
 <div class="auth-page">

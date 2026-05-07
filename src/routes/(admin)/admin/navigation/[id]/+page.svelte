@@ -4,6 +4,7 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import Card from '$lib/components/ui/Card.svelte';
 	import Alert from '$lib/components/ui/Alert.svelte';
+	import { localText } from '$lib/localization/dictionary.svelte';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 	let { navItem } = $derived(data);
@@ -20,7 +21,7 @@
 </script>
 
 <svelte:head>
-	<title>Edit nav item — Admin</title>
+	<title>{localText('page_title_admin_edit_nav')}</title>
 </svelte:head>
 
 <div class="max-w-lg space-y-6">
