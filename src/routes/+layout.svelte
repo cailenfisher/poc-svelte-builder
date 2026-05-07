@@ -7,7 +7,7 @@
 	import Navbar from '$lib/components/universal/Nav/Navbar.svelte';
 
 	let { data, children } = $props();
-	let { supabase, session, dictionaryPayload } = $derived(data);
+	let { supabase, session, dictionaryPayload, navItems } = $derived(data);
 
 	let enableLocalization = Boolean(PUBLIC_APPLICATION_LANGUAGE_SUPPORT_ENABLED);
 
@@ -31,7 +31,7 @@
 
 <div class="min-h-screen bg-gray-50 p-6">
 	{#if dictionaryLoaded || !enableLocalization}
-		<Navbar {session} />
+		<Navbar {session} {navItems} />
 		{@render children()}
 	{:else}
 		<div class="p-1 text-2xl text-amber-200">Loading localized content...</div>

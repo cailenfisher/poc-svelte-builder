@@ -7,6 +7,7 @@
 		faGauge,
 		faLanguage,
 		faFileLines,
+		faBars,
 		faArrowRightFromBracket,
 	} from '@fortawesome/free-solid-svg-icons';
 
@@ -24,6 +25,7 @@
 			<NavLink href="/admin" label="Dashboard" icon={faGauge} />
 			<NavLink href="/admin/locale" label="Locales" icon={faLanguage} />
 			<NavLink href="/admin/content" label="Content" icon={faFileLines} />
+			<NavLink href="/admin/navigation" label="Navigation" icon={faBars} />
 		</nav>
 
 		<div class="admin-sidebar-footer">
