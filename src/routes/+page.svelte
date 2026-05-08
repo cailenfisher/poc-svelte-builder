@@ -18,4 +18,11 @@
 
 <HomeHero />
 <DemoBanner />
-<BlogFeed posts={posts as unknown as Post[]} />
+<section class="border-b border-gray-200 bg-gray-50 px-6 py-12">
+	<div class="mx-auto max-w-5xl">
+		<div class="mb-8">
+			<h2 class="mb-1.5 text-xl font-bold text-gray-900">SB Updates</h2>
+			<BlogFeed posts={posts as unknown as Post[]} />
+		</div>
+	</div>
+</section>

@@ -59,7 +59,9 @@
 					class="flex flex-col gap-2 rounded-sm border border-gray-200 bg-white p-5 shadow-xs transition-shadow hover:shadow-md"
 				>
 					<div class="mb-1 flex items-center justify-between">
-						<div class="flex size-9 items-center justify-center rounded-sm {demo.iconBg} {demo.iconText}">
+						<div
+							class="flex size-9 items-center justify-center rounded-sm {demo.iconBg} {demo.iconText}"
+						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
@@ -71,7 +73,9 @@
 								<path stroke-linecap="round" stroke-linejoin="round" d={demo.icon} />
 							</svg>
 						</div>
-						<span class="rounded-full border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-500">
+						<span
+							class="rounded-full border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-500"
+						>
 							{demo.label}
 						</span>
 					</div>
@@ -87,7 +91,11 @@
 							stroke="currentColor"
 							class="size-3.5"
 						>
-							<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+							/>
 						</svg>
 					</span>
 				</a>
