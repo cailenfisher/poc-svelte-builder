@@ -439,10 +439,28 @@
 	.pm-column-add {
 		@apply flex w-full items-center gap-1.5 rounded-md px-3 py-2 text-sm text-gray-400 transition-colors hover:bg-stone-300/50 hover:text-gray-600;
 	}
+	.pm-column-drag-over {
+		@apply bg-blue-50/60 ring-2 ring-blue-300 ring-inset;
+	}
+	.pm-add-task-form {
+		@apply rounded-md bg-white p-2 shadow-xs;
+	}
+	.pm-add-task-input {
+		@apply w-full resize-none rounded border border-gray-200 px-2 py-1.5 text-sm text-gray-800 outline-none placeholder:text-gray-400 focus:border-blue-400 focus:ring-1 focus:ring-blue-200;
+	}
 
 	/* Task Card */
 	.pm-task-card {
-		@apply cursor-pointer rounded-md bg-white p-3 shadow-xs transition-shadow hover:shadow-sm;
+		@apply relative cursor-pointer rounded-md bg-white p-3 shadow-xs transition-shadow hover:shadow-sm;
+	}
+	.pm-task-card-selected {
+		@apply ring-2 ring-blue-500 ring-inset;
+	}
+	.pm-task-card-dragging {
+		@apply opacity-50;
+	}
+	.pm-task-delete-btn {
+		@apply ml-0.5 flex h-4 w-4 shrink-0 cursor-pointer items-center justify-center rounded text-[10px] text-transparent transition-colors group-hover:text-gray-300 hover:bg-red-50! hover:text-red-400!;
 	}
 	.pm-task-title {
 		@apply text-sm leading-snug text-gray-800;

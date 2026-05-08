@@ -10,7 +10,7 @@
 
 	// ── Types ─────────────────────────────────────────────────────────────────
 	type Member = { id: string; initials: string; bg: string; text: string };
-	type Task = { id: number; labelCode: string; priority?: 'P1'; assigneeId: string };
+	type Task = { id: number; labelCode: string; priority?: 'P1'; assigneeId: string; title?: string };
 	type Column = { id: string; titleSlug: string; tasks: Task[] };
 	type NavWorkspace = { id: number; pinned: boolean };
 	type Workspace = {
@@ -26,6 +26,7 @@
 		owner: string;
 		sso: string;
 	};
+	type SelectedEntry = { task: Task; column: Column } | null;
 
 	// ── Mock Data ─────────────────────────────────────────────────────────────
 	const members: Member[] = [
@@ -37,7 +38,7 @@
 
 	const memberMap = new Map(members.map((m) => [m.id, m]));
 
-	const columns: Column[] = [
+	let columns = $state<Column[]>([
 		{
 			id: 'backlog',
 			titleSlug: 'pm_col_backlog',
@@ -74,7 +75,7 @@
 				{ id: 12, labelCode: 'BIL-102', assigneeId: 'S' },
 			],
 		},
-	];
+	]);
 
 	const navWorkspaces: NavWorkspace[] = [
 		{ id: 1, pinned: true },
@@ -96,12 +97,58 @@
 		sso: 'Okta · enforced',
 	};
 
-	const totalTasks = columns.reduce((sum, col) => sum + col.tasks.length, 0);
+	// ── Board state ────────────────────────────────────────────────────────────
 	const boardSprint = 14;
+	const totalTasks = $derived(columns.reduce((sum, col) => sum + col.tasks.length, 0));
 
 	let inspectorOpen = $state(true);
+	let selectedTaskId = $state<number | null>(null);
+	let nextTaskId = 100;
 
+	const selectedEntry = $derived.by<SelectedEntry>(() => {
+		if (selectedTaskId === null) return null;
+		for (const col of columns) {
+			const task = col.tasks.find((t) => t.id === selectedTaskId);
+			if (task) return { task, column: col };
+		}
+		return null;
+	});
 
+	// Auto-open inspector whenever a task is selected.
+	$effect(() => {
+		if (selectedTaskId !== null) inspectorOpen = true;
+	});
+
+	// ── Actions ────────────────────────────────────────────────────────────────
+	function addTask(columnId: string, title: string): number {
+		const col = columns.find((c) => c.id === columnId);
+		if (!col) return -1;
+		const id = nextTaskId++;
+		col.tasks.push({ id, labelCode: `NEW-${id}`, assigneeId: members[0].id, title });
+		return id;
+	}
+
+	function deleteTask(taskId: number) {
+		for (const col of columns) {
+			const idx = col.tasks.findIndex((t) => t.id === taskId);
+			if (idx !== -1) {
+				col.tasks.splice(idx, 1);
+				if (selectedTaskId === taskId) selectedTaskId = null;
+				return;
+			}
+		}
+	}
+
+	function moveTask(taskId: number, fromColumnId: string, toColumnId: string) {
+		if (fromColumnId === toColumnId) return;
+		const fromCol = columns.find((c) => c.id === fromColumnId);
+		const toCol = columns.find((c) => c.id === toColumnId);
+		if (!fromCol || !toCol) return;
+		const idx = fromCol.tasks.findIndex((t) => t.id === taskId);
+		if (idx === -1) return;
+		const [task] = fromCol.tasks.splice(idx, 1);
+		toCol.tasks.push(task);
+	}
 </script>
 
 <svelte:head>
@@ -148,26 +195,40 @@
 			<div class="flex items-center gap-3">
 				<div class="pm-member-avatars">
 					{#each members as member}
-						<div
-							class="pm-member-avatar {member.bg} {member.text}"
-							title={member.id}
-						>{member.initials}</div>
+						<div class="pm-member-avatar {member.bg} {member.text}" title={member.id}>
+							{member.initials}
+						</div>
 					{/each}
 				</div>
 				<Button variant="secondary" size="sm">
 					<LocalText slug="pm_btn_group_status" scope="pm" />
 				</Button>
-				<Button variant="primary" size="sm">
+				<Button
+					variant="primary"
+					size="sm"
+					onclick={() => {
+						const id = addTask('backlog', 'New task');
+						if (id > 0) selectedTaskId = id;
+					}}
+				>
 					<Icon icon={faPlus} class="text-[11px]" />
 					<LocalText slug="pm_btn_add_task" scope="pm" />
 				</Button>
 			</div>
 		</div>
 
-		<!-- Kanban board -->
-		<div class="pm-kanban">
+		<!-- Kanban board — clicking the empty background deselects -->
+		<div class="pm-kanban" role="presentation" onclick={() => (selectedTaskId = null)}>
 			{#each columns as column (column.id)}
-				<PmKanbanColumn {column} {memberMap} />
+				<PmKanbanColumn
+					{column}
+					{memberMap}
+					{selectedTaskId}
+					onaddtask={addTask}
+					ondeletetask={deleteTask}
+					onselecttask={(id) => (selectedTaskId = id)}
+					onmovetask={moveTask}
+				/>
 			{/each}
 		</div>
 	</div>
@@ -176,6 +237,9 @@
 	{#if inspectorOpen}
 		<PmInspectorPanel
 			workspace={activeWorkspace}
+			{memberMap}
+			{selectedEntry}
+			ondeletetask={deleteTask}
 			onclose={() => (inspectorOpen = false)}
 		/>
 	{/if}
