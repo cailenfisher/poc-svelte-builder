@@ -10,11 +10,9 @@
 
 <div class="flex items-center gap-2.5">
 	{#if profileImage}
-		<img class="h-10 w-10 rounded-full" src={profileImage} alt={profileImageLabel} />
+		<img class="avatar h-10 w-10" src={profileImage} alt={profileImageLabel} />
 	{:else}
 		<AvatarPlaceholder />
 	{/if}
-	<div class="text-heading font-medium">
-		{user.email}
-	</div>
+	<div class="text-sm font-medium text-gray-700">{user.email}</div>
 </div>

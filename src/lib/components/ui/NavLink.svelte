@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 	import type { Snippet } from 'svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import Icon from './Icon.svelte';
 
 	let {
@@ -16,17 +16,8 @@
 		class?: string;
 	} = $props();
 
-	const isActive = $derived($page.url.pathname === href || $page.url.pathname.startsWith(href + '/'));
-
-	const classes = $derived(
-		[
-			'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
-			isActive
-				? 'bg-blue-50 text-blue-700'
-				: 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
-			className,
-		].join(' ')
-	);
+	const isActive = $derived(page.url.pathname === href || page.url.pathname.startsWith(href + '/'));
+	const classes = $derived(['nav-link', isActive ? 'nav-link-active' : '', className].filter(Boolean).join(' '));
 </script>
 
 <a {href} class={classes} aria-current={isActive ? 'page' : undefined}>
