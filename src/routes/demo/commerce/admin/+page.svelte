@@ -66,7 +66,7 @@
 	<header class="commerce-admin-header">
 		<div class="flex items-center justify-between">
 			<div class="flex items-center gap-4">
-				<a href="/demos/commerce" class="back-link">
+				<a href="/demo/commerce" class="back-link">
 					<LocalText slug="commerce_back_to_store" />
 				</a>
 				<span class="text-gray-300">|</span>
@@ -106,11 +106,7 @@
 </div>
 
 <!-- Add / Edit modal -->
-<Modal
-	open={formOpen}
-	size="lg"
-	onclose={closeForm}
->
+<Modal open={formOpen} size="lg" onclose={closeForm}>
 	{#snippet header()}
 		<span class="modal-title">
 			{#if formMode === 'edit'}
@@ -120,7 +116,11 @@
 			{/if}
 		</span>
 	{/snippet}
-	<ProductForm product={editingProduct ?? undefined} onsubmit={handleFormSubmit} oncancel={closeForm} />
+	<ProductForm
+		product={editingProduct ?? undefined}
+		onsubmit={handleFormSubmit}
+		oncancel={closeForm}
+	/>
 </Modal>
 
 <!-- Delete confirmation modal -->
