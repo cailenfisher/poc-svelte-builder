@@ -6,6 +6,7 @@
 	import ProfileSummaryWidget from '$lib/components/universal/User/Account/ProfileSummaryWidget.svelte';
 	import NotificationBell from '$lib/components/universal/Nav/NotificationBell.svelte';
 	import LocalText from '$lib/localization/LocalText.svelte';
+	import { localText } from '$lib/localization/dictionary.svelte';
 	import { page } from '$app/state';
 
 	let {
@@ -14,13 +15,12 @@
 		notifications = []
 	}: { session: Session | null; navItems: NavItem[]; notifications: Notification[] } = $props();
 
-	const visibleItems = $derived(
-		navItems.filter((item) => !item.requires_auth || session !== null)
-	);
+	const visibleItems = $derived(navItems.filter((item) => !item.requires_auth || session !== null));
 </script>
 
 <nav class="navbar">
 	<a href="/" class="navbar-brand">
+		<img class="inline h-32" src="/logo.png" alt={localText('site_name')} />
 		<LocalText slug="nav_brand" />
 	</a>
 	<div class="flex items-center gap-4">

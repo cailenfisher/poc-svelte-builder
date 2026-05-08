@@ -30,7 +30,7 @@
 
 <svelte:head><title>{localText('site_name')}</title></svelte:head>
 
-{#if page.url.pathname.startsWith('/demos')}
+{#if page.url.pathname.startsWith('/demo')}
 	{#if dictionaryLoaded || !enableLocalization}
 		{@render children()}
 	{:else}
