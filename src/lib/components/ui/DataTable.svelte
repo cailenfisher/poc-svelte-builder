@@ -48,7 +48,6 @@
 	});
 
 	const totalPages = $derived(Math.max(1, Math.ceil(sorted.length / pageSize)));
-
 	const paged = $derived(sorted.slice((currentPage - 1) * pageSize, currentPage * pageSize));
 
 	function toggleSort(key: keyof T) {
@@ -69,28 +68,22 @@
 
 <div class="space-y-3">
 	{#if filterFn}
-		<div>
-			<input
-				type="search"
-				bind:value={query}
-				placeholder="Search…"
-				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 focus:outline-none"
-			/>
-		</div>
+		<input
+			type="search"
+			bind:value={query}
+			placeholder="Search…"
+			class="field-control"
+		/>
 	{/if}
 
-	<div class="overflow-x-auto rounded-lg border border-gray-200">
-		<table class="w-full text-left text-sm text-gray-700">
-			<thead class="bg-gray-50 text-xs font-semibold uppercase tracking-wide text-gray-500">
+	<div class="data-table-wrapper">
+		<table class="data-table">
+			<thead class="data-table-head">
 				<tr>
 					{#each columns as col}
-						<th scope="col" class="px-4 py-3">
+						<th scope="col" class="data-table-th">
 							{#if col.sortable}
-								<button
-									type="button"
-									onclick={() => toggleSort(col.key)}
-									class="flex items-center gap-1 hover:text-gray-900"
-								>
+								<button type="button" onclick={() => toggleSort(col.key)} class="data-table-sort-btn">
 									{col.label}
 									{#if sortKey === col.key}
 										<Icon icon={sortAsc ? faChevronUp : faChevronDown} class="text-blue-500" />
@@ -105,10 +98,10 @@
 					{/each}
 				</tr>
 			</thead>
-			<tbody class="divide-y divide-gray-100">
+			<tbody class="data-table-body">
 				{#if paged.length === 0}
 					<tr>
-						<td colspan={columns.length} class="px-4 py-8 text-center text-gray-400">
+						<td colspan={columns.length} class="data-table-empty">
 							{#if emptyState}
 								{@render emptyState()}
 							{:else}

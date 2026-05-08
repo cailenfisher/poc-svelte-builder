@@ -3,11 +3,12 @@
 	import './layout.css';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { loadDictionary } from '$lib/localization/dictionary.svelte';
+	import { page } from '$app/state';
+	import { loadDictionary, localText } from '$lib/localization/dictionary.svelte';
 	import Navbar from '$lib/components/universal/Nav/Navbar.svelte';
 
 	let { data, children } = $props();
-	let { supabase, session, dictionaryPayload } = $derived(data);
+	let { supabase, session, dictionaryPayload, navItems, notifications } = $derived(data);
 
 	let enableLocalization = Boolean(PUBLIC_APPLICATION_LANGUAGE_SUPPORT_ENABLED);
 
@@ -17,7 +18,6 @@
 	});
 
 	onMount(() => {
-		console.log('session', session);
 		const { data } = supabase.auth.onAuthStateChange((_event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth');
@@ -28,13 +28,21 @@
 	});
 </script>
 
-<svelte:head><title>Svelte Builder POC</title></svelte:head>
+<svelte:head><title>{localText('site_name')}</title></svelte:head>
 
-<div class="h-screen w-screen p-6">
+{#if page.url.pathname.startsWith('/demo')}
 	{#if dictionaryLoaded || !enableLocalization}
-		<Navbar {session} />
 		{@render children()}
 	{:else}
-		<div class="p-1 text-2xl text-amber-200">Loading localized content...</div>
+		<div class="p-6 text-2xl text-amber-200">Loading localized content...</div>
 	{/if}
-</div>
+{:else}
+	<div class="min-h-screen bg-gray-50 p-6">
+		{#if dictionaryLoaded || !enableLocalization}
+			<Navbar {session} {navItems} {notifications} />
+			{@render children()}
+		{:else}
+			<div class="p-1 text-2xl text-amber-200">Loading localized content...</div>
+		{/if}
+	</div>
+{/if}

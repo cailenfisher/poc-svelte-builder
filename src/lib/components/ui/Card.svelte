@@ -13,12 +13,7 @@
 		children?: Snippet;
 	} = $props();
 
-	const variantClasses: Record<string, string> = {
-		default:  'rounded-lg bg-white shadow-md',
-		outlined: 'rounded-lg border border-gray-200 bg-white shadow-md',
-	};
-
-	const classes = $derived([variantClasses[variant], padding, className].join(' '));
+	const classes = $derived([variant === 'outlined' ? 'card-outlined' : 'card', padding, className].join(' '));
 </script>
 
 <div class={classes}>
