@@ -348,6 +348,103 @@
 	}
 
 	/* ================================================
+	   MODAL
+	   ================================================ */
+
+	.modal-overlay {
+		@apply fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4;
+	}
+	.modal {
+		@apply relative w-full max-w-lg rounded-md bg-white shadow-xl;
+	}
+	.modal-lg {
+		@apply max-w-2xl;
+	}
+	.modal-sm {
+		@apply max-w-sm;
+	}
+	.modal-header {
+		@apply flex items-center justify-between border-b border-gray-100 px-6 py-4;
+	}
+	.modal-title {
+		@apply text-base font-semibold text-gray-900;
+	}
+	.modal-close {
+		@apply flex h-8 w-8 items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-600;
+	}
+	.modal-body {
+		@apply overflow-y-auto px-6 py-5;
+	}
+	.modal-footer {
+		@apply flex items-center justify-end gap-2 border-t border-gray-100 px-6 py-4;
+	}
+
+	/* ================================================
+	   COMMERCE
+	   ================================================ */
+
+	.product-grid {
+		@apply grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+	}
+
+	.product-card {
+		@apply flex w-full flex-col overflow-hidden rounded-md border border-gray-200 bg-white shadow-2xs transition-shadow hover:shadow-md;
+	}
+	.product-card-image {
+		@apply flex aspect-square w-full items-center justify-center;
+	}
+	.product-card-body {
+		@apply flex flex-1 flex-col p-4;
+	}
+	.product-card-name {
+		@apply line-clamp-2 text-sm font-semibold text-gray-900;
+	}
+	.product-card-desc {
+		@apply mt-1 line-clamp-2 flex-1 text-xs text-gray-500;
+	}
+	.product-card-footer {
+		@apply mt-3 flex items-center justify-between;
+	}
+
+	.price-tag {
+		@apply text-base font-bold text-gray-900;
+	}
+	.price-tag-lg {
+		@apply text-2xl font-bold text-gray-900;
+	}
+	.price-tag-sm {
+		@apply text-sm font-semibold text-gray-900;
+	}
+
+	.badge-amber {
+		@apply bg-amber-50 text-amber-700;
+	}
+
+	.category-filter {
+		@apply flex flex-wrap gap-2;
+	}
+	.category-btn {
+		@apply rounded-full border px-4 py-1.5 text-sm font-medium transition-colors;
+	}
+	.category-btn-active {
+		@apply border-blue-600 bg-blue-600 text-white;
+	}
+	.category-btn-inactive {
+		@apply border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:bg-gray-50;
+	}
+
+	/* Commerce admin shell */
+	.commerce-admin-shell {
+		@apply flex min-h-screen flex-col bg-gray-50;
+	}
+	.commerce-admin-header {
+		@apply border-b border-gray-200 bg-white px-6 py-4;
+	}
+	.commerce-admin-body {
+		@apply flex-1 px-6 py-6;
+	}
+
+	/* ================================================
        PM DEMO
        ================================================ */
 
