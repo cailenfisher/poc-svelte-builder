@@ -346,4 +346,184 @@
 		display: block;
 		white-space: pre-line;
 	}
+
+	/* ================================================
+       PM DEMO
+       ================================================ */
+
+	.pm-shell {
+		@apply flex h-screen overflow-hidden bg-stone-100;
+	}
+
+	/* Icon Rail */
+	.pm-icon-rail {
+		@apply flex w-[60px] shrink-0 flex-col items-center border-r border-gray-200 bg-white;
+	}
+	.pm-icon-rail-brand {
+		@apply flex h-[60px] w-full shrink-0 items-center justify-center border-b border-gray-200 text-base font-bold text-gray-900;
+	}
+	.pm-icon-rail-nav {
+		@apply flex flex-1 flex-col items-center gap-1 py-3;
+	}
+	.pm-icon-rail-footer {
+		@apply flex flex-col items-center gap-2 border-t border-gray-200 py-3;
+	}
+	.pm-icon-btn {
+		@apply flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700;
+	}
+	.pm-icon-btn-active {
+		@apply bg-blue-600 text-white hover:bg-blue-700 hover:text-white;
+	}
+	.pm-icon-rail-avatar {
+		@apply flex h-7 w-7 items-center justify-center rounded-full bg-gray-700 text-[11px] font-semibold text-white;
+	}
+
+	/* Sub Nav */
+	.pm-subnav {
+		@apply flex w-[220px] shrink-0 flex-col border-r border-gray-200 bg-white;
+	}
+	.pm-subnav-header {
+		@apply flex h-[60px] shrink-0 items-center justify-between border-b border-gray-200 px-4;
+	}
+	.pm-subnav-body {
+		@apply flex-1 overflow-y-auto p-3;
+	}
+	.pm-subnav-item {
+		@apply flex w-full items-center gap-2.5 rounded-md px-2.5 py-1.5 text-sm text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900;
+	}
+	.pm-subnav-item-active {
+		@apply bg-blue-600 text-white hover:bg-blue-700 hover:text-white;
+	}
+	.pm-subnav-section-label {
+		@apply mt-3 mb-1 px-2.5 text-[10px] font-semibold tracking-widest text-gray-400 uppercase;
+	}
+	.pm-subnav-footer {
+		@apply border-t border-gray-200 p-3;
+	}
+
+	/* Top bar */
+	.pm-topbar {
+		@apply flex h-10 shrink-0 items-center justify-between border-b border-gray-200 bg-white px-5;
+	}
+
+	/* Board */
+	.pm-board-header {
+		@apply flex shrink-0 items-center justify-between px-6 pt-5 pb-4;
+	}
+	.pm-board-title {
+		@apply text-2xl font-bold text-gray-900;
+	}
+	.pm-board-meta {
+		@apply mt-0.5 text-sm text-gray-500;
+	}
+
+	/* Kanban */
+	.pm-kanban {
+		@apply flex flex-1 gap-3 overflow-x-auto px-6 pb-6;
+	}
+	.pm-column {
+		@apply flex w-[210px] shrink-0 flex-col rounded-lg bg-stone-200/60;
+	}
+	.pm-column-header {
+		@apply flex items-center justify-between px-3 pt-3 pb-2;
+	}
+	.pm-column-title {
+		@apply text-sm font-semibold text-gray-700;
+	}
+	.pm-column-count {
+		@apply ml-1.5 rounded bg-stone-300 px-1.5 py-0.5 text-xs font-medium text-gray-600;
+	}
+	.pm-column-body {
+		@apply flex flex-1 flex-col gap-2 overflow-y-auto px-2 pb-2;
+	}
+	.pm-column-add {
+		@apply flex w-full items-center gap-1.5 rounded-md px-3 py-2 text-sm text-gray-400 transition-colors hover:bg-stone-300/50 hover:text-gray-600;
+	}
+
+	/* Task Card */
+	.pm-task-card {
+		@apply cursor-pointer rounded-md bg-white p-3 shadow-xs transition-shadow hover:shadow-sm;
+	}
+	.pm-task-title {
+		@apply text-sm leading-snug text-gray-800;
+	}
+	.pm-task-footer {
+		@apply mt-2 flex items-center justify-between;
+	}
+	.pm-task-labels {
+		@apply flex items-center gap-1;
+	}
+	.pm-label {
+		@apply rounded border border-gray-200 px-1.5 py-0.5 font-mono text-[10px] text-gray-500;
+	}
+	.pm-priority {
+		@apply rounded bg-blue-600 px-1.5 py-0.5 text-[10px] font-semibold text-white;
+	}
+	.pm-avatar-sm {
+		@apply flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[9px] font-bold;
+	}
+
+	/* Member avatar stack */
+	.pm-member-avatars {
+		@apply flex items-center;
+	}
+	.pm-member-avatar {
+		@apply -ml-1.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold ring-2 ring-white first:ml-0;
+	}
+
+	/* Inspector Panel */
+	.pm-inspector {
+		@apply flex w-[280px] shrink-0 flex-col border-l border-gray-200 bg-white;
+	}
+	.pm-inspector-header {
+		@apply flex h-[60px] shrink-0 items-center justify-between border-b border-gray-200 px-4;
+	}
+	.pm-inspector-title {
+		@apply text-sm font-semibold text-gray-700;
+	}
+	.pm-inspector-body {
+		@apply flex-1 overflow-y-auto;
+	}
+	.pm-inspector-ws-card {
+		@apply flex items-center gap-3 border-b border-gray-100 px-4 py-3;
+	}
+	.pm-inspector-ws-avatar {
+		@apply flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-white;
+	}
+	.pm-inspector-ws-name {
+		@apply text-sm font-semibold text-gray-900;
+	}
+	.pm-inspector-ws-meta {
+		@apply text-xs text-gray-500;
+	}
+	.pm-inspector-tabs {
+		@apply flex border-b border-gray-100 px-4;
+	}
+	.pm-inspector-tab {
+		@apply mr-5 border-b-2 py-2.5 text-sm font-medium transition-colors;
+	}
+	.pm-inspector-tab-active {
+		@apply border-blue-600 text-blue-600;
+	}
+	.pm-inspector-tab-inactive {
+		@apply cursor-pointer border-transparent text-gray-500 hover:text-gray-700;
+	}
+	.pm-inspector-row {
+		@apply flex items-center justify-between px-4 py-2;
+	}
+	.pm-inspector-key {
+		@apply text-xs text-gray-400;
+	}
+	.pm-inspector-val {
+		@apply text-xs font-medium text-gray-700;
+	}
+	.pm-inspector-section {
+		@apply px-4 py-3;
+	}
+	.pm-inspector-section-title {
+		@apply mb-2 text-xs font-semibold text-gray-500;
+	}
+	.pm-inspector-footer {
+		@apply flex gap-2 border-t border-gray-100 p-4;
+	}
 }
