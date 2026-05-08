@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { mergeDictionary } from '$lib/localization/dictionary.svelte';
-	import type { LocalText as LocalTextItem } from '$lib/localization/localization';
 	import PmIconRail from '$lib/components/pm/PmIconRail.svelte';
 	import PmSubNav from '$lib/components/pm/PmSubNav.svelte';
 	import PmKanbanColumn from '$lib/components/pm/PmKanbanColumn.svelte';
@@ -104,92 +101,7 @@
 
 	let inspectorOpen = $state(true);
 
-	// ── LocalText mock injection ───────────────────────────────────────────────
-	// Injects demo content into the dictionary so LocalText components render
-	// without requiring the INSERT SQL to be run first.
-	// IDs use the 5000+ range to avoid collisions with real data.
-	const EN_US: LocalTextItem['locale'] = {
-		id: 99,
-		code: 'en-US',
-		name: 'English',
-		native_name: 'English',
-		dir: 'ltr',
-	};
 
-	function makeEntry(
-		linkId: number,
-		slug: string,
-		content: string,
-		scoped_content_id: number | null = null
-	): LocalTextItem {
-		return {
-			id: linkId * 1000 + (scoped_content_id ?? 0),
-			scoped_content_id,
-			content,
-			locale: EN_US,
-			link: { id: linkId, slug, title: slug, scope: 'pm' },
-		};
-	}
-
-	const pmContent: LocalTextItem[] = [
-		// UI chrome
-		makeEntry(5001, 'pm_section_workspaces', 'Workspaces'),
-		makeEntry(5002, 'pm_filter_workspaces', 'Filter workspaces'),
-		makeEntry(5003, 'pm_nav_all_workspaces', 'All workspaces'),
-		makeEntry(5004, 'pm_nav_active', 'Active'),
-		makeEntry(5005, 'pm_nav_suspended', 'Suspended'),
-		makeEntry(5006, 'pm_nav_recently_created', 'Recently created'),
-		makeEntry(5007, 'pm_nav_pinned_filter', 'Pinned'),
-		makeEntry(5008, 'pm_nav_tags', 'Tags'),
-		makeEntry(5009, 'pm_nav_saved_views', 'Saved views'),
-		makeEntry(5010, 'pm_btn_new_workspace', '+ New workspace'),
-		makeEntry(5011, 'pm_board_items', '{count} items'),
-		makeEntry(5012, 'pm_board_owners', '{count} owners'),
-		makeEntry(5013, 'pm_board_sprint', 'sprint {number}'),
-		makeEntry(5014, 'pm_btn_group_status', 'Group status'),
-		makeEntry(5015, 'pm_btn_add_task', '+ Task'),
-		makeEntry(5016, 'pm_col_backlog', 'Backlog'),
-		makeEntry(5017, 'pm_col_in_progress', 'In progress'),
-		makeEntry(5018, 'pm_col_review', 'Review'),
-		makeEntry(5019, 'pm_col_done', 'Done'),
-		makeEntry(5020, 'pm_btn_add_card', '+ Add card'),
-		makeEntry(5021, 'pm_inspector_title', 'Inspector · Workspace'),
-		makeEntry(5022, 'pm_inspector_overview', 'Overview'),
-		makeEntry(5023, 'pm_inspector_activity', 'Activity'),
-		makeEntry(5024, 'pm_inspector_members', 'Members'),
-		makeEntry(5025, 'pm_inspector_plan', 'Plan'),
-		makeEntry(5026, 'pm_inspector_seats', 'Seats'),
-		makeEntry(5027, 'pm_inspector_region', 'Region'),
-		makeEntry(5028, 'pm_inspector_owner', 'Owner'),
-		makeEntry(5029, 'pm_inspector_sso', 'SSO'),
-		makeEntry(5030, 'pm_inspector_recent_activity', 'Recent activity'),
-		makeEntry(5031, 'pm_btn_suspend', 'Suspend'),
-		makeEntry(5032, 'pm_btn_open', 'Open →'),
-		makeEntry(5033, 'pm_topbar_search', 'Search'),
-		makeEntry(5034, 'pm_subnav_pinned_label', 'PINNED'),
-		makeEntry(5035, 'pm_breadcrumb_workspaces', 'Workspaces'),
-		// Scoped task titles (all share link ID 5041)
-		makeEntry(5041, 'pm_task_title', 'Rotate API keys', 1),
-		makeEntry(5041, 'pm_task_title', 'Audit log retention', 2),
-		makeEntry(5041, 'pm_task_title', 'SAML group sync', 3),
-		makeEntry(5041, 'pm_task_title', 'Region us-west-3', 4),
-		makeEntry(5041, 'pm_task_title', 'Migrate billing v2', 5),
-		makeEntry(5041, 'pm_task_title', 'Onboard Initech', 6),
-		makeEntry(5041, 'pm_task_title', 'SCIM patch', 7),
-		makeEntry(5041, 'pm_task_title', 'Dark mode GA', 8),
-		makeEntry(5041, 'pm_task_title', 'Pricing page', 9),
-		makeEntry(5041, 'pm_task_title', 'SSO for Globex', 10),
-		makeEntry(5041, 'pm_task_title', 'Q3 access review', 11),
-		makeEntry(5041, 'pm_task_title', 'Webhook v3', 12),
-		// Scoped workspace names (all share link ID 5042)
-		makeEntry(5042, 'pm_workspace_name', 'Acme Corp', 1),
-		makeEntry(5042, 'pm_workspace_name', 'Globex', 2),
-		makeEntry(5042, 'pm_workspace_name', 'Initech', 3),
-	];
-
-	onMount(() => {
-		mergeDictionary(pmContent);
-	});
 </script>
 
 <svelte:head>
