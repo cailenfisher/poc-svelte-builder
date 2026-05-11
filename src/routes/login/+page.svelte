@@ -8,7 +8,9 @@
 	import Alert from '$lib/components/ui/Alert.svelte';
 	import Icon from '$lib/components/ui/Icon.svelte';
 	import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-	import { localText } from '$lib/localization/dictionary.svelte';
+	import { getDictionary } from '$lib/localization/context.svelte';
+
+	const dict = getDictionary();
 
 	interface Props {
 		form: ActionData;
@@ -26,7 +28,7 @@
 </script>
 
 <svelte:head>
-	<title>{localText('page_title_login')}</title>
+	<title>{dict.localText('page_title_login')}</title>
 </svelte:head>
 
 <div class="auth-page">

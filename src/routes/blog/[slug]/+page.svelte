@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { untrack } from 'svelte';
-	import { mergeDictionary, localText } from '$lib/localization/dictionary.svelte';
+	import { getDictionary } from '$lib/localization/context.svelte';
 	import type { PageData } from './$types';
 	import type { Post } from '$lib/types/blog';
 	import LocalText from '$lib/localization/LocalText.svelte';
 	import LocalDate from '$lib/localization/LocalDate.svelte';
+
+	const dict = getDictionary();
 
 	let { data }: { data: PageData } = $props();
 	let { post, blogContent } = $derived(data);
@@ -12,12 +14,12 @@
 
 	$effect(() => {
 		const content = blogContent;
-		if (content?.length) untrack(() => mergeDictionary(content));
+		if (content?.length) untrack(() => dict.mergeDictionary(content));
 	});
 </script>
 
 <svelte:head>
-	<title>{localText('post_title', undefined, 'blog', typedPost.id)}</title>
+	<title>{dict.localText('post_title', undefined, 'blog', typedPost.id)}</title>
 </svelte:head>
 
 <article class="mx-auto max-w-2xl space-y-6">

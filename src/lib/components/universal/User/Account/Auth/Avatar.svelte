@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { getContentBySlug } from '$lib/localization/dictionary.svelte';
+	import { getDictionary } from '$lib/localization/context.svelte';
 	import AvatarPlaceholder from './AvatarPlaceholder.svelte';
+	const dict = getDictionary();
 
 	let { user } = $props();
 
 	const profileImage = $derived(user.user_metadata.avatar_url ?? null);
-	let profileImageLabel = $derived(getContentBySlug('profile_image')?.content ?? 'Avatar');
+	let profileImageLabel = $derived(dict.getContentBySlug('profile_image')?.content ?? 'Avatar');
 </script>
 
 <div class="flex items-center gap-2.5">

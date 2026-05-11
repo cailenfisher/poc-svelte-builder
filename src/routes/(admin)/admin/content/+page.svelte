@@ -5,7 +5,8 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import Alert from '$lib/components/ui/Alert.svelte';
 	import Card from '$lib/components/ui/Card.svelte';
-	import { localText } from '$lib/localization/dictionary.svelte';
+	import { getDictionary } from '$lib/localization/context.svelte';
+	const dict = getDictionary();
 
 	type Link = {
 		id: number;
@@ -35,7 +36,7 @@
 </script>
 
 <svelte:head>
-	<title>{localText('page_title_admin_content')}</title>
+	<title>{dict.localText('page_title_admin_content')}</title>
 </svelte:head>
 
 <div class="space-y-6">

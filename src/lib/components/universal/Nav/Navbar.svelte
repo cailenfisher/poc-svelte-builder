@@ -6,8 +6,9 @@
 	import ProfileSummaryWidget from '$lib/components/universal/User/Account/ProfileSummaryWidget.svelte';
 	import NotificationBell from '$lib/components/universal/Nav/NotificationBell.svelte';
 	import LocalText from '$lib/localization/LocalText.svelte';
-	import { localText } from '$lib/localization/dictionary.svelte';
+	import { getDictionary } from '$lib/localization/context.svelte';
 	import { page } from '$app/state';
+	const dict = getDictionary();
 
 	let {
 		session,
@@ -20,7 +21,7 @@
 
 <nav class="navbar">
 	<a href="/" class="navbar-brand">
-		<img class="inline h-32" src="/logo.png" alt={localText('site_name')} />
+		<img class="inline h-32" src="/logo.png" alt={dict.localText('site_name')} />
 		<LocalText slug="nav_brand" />
 	</a>
 	<div class="flex items-center gap-4">

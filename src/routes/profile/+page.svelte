@@ -7,7 +7,9 @@
 	import Card from '$lib/components/ui/Card.svelte';
 	import FormField from '$lib/components/ui/FormField.svelte';
 	import Alert from '$lib/components/ui/Alert.svelte';
-	import { localText } from '$lib/localization/dictionary.svelte';
+	import { getDictionary } from '$lib/localization/context.svelte';
+
+	const dict = getDictionary();
 
 	interface Props {
 		data: PageData;
@@ -48,7 +50,7 @@
 </script>
 
 <svelte:head>
-	<title>{localText('page_title_profile')}</title>
+	<title>{dict.localText('page_title_profile')}</title>
 </svelte:head>
 
 <div class="mx-auto max-w-2xl space-y-6">
@@ -106,7 +108,7 @@
 				{/snippet}
 			</FormField>
 
-			<FormField disabled hint={localText('profile_email_hint')}>
+			<FormField disabled hint={dict.localText('profile_email_hint')}>
 				{#snippet label()}
 					<label for="profile_email_display"><LocalText slug="common_email_label" /></label>
 				{/snippet}

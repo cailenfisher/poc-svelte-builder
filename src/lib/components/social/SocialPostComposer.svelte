@@ -1,8 +1,9 @@
 <script lang="ts">
 	import type { SocialUser } from '$lib/types/social';
 	import LocalText from '$lib/localization/LocalText.svelte';
-	import { localText } from '$lib/localization/dictionary.svelte';
+	import { getDictionary } from '$lib/localization/context.svelte';
 	import SocialAvatar from './SocialAvatar.svelte';
+	const dict = getDictionary();
 
 	const MAX_CHARS = 280;
 
@@ -20,7 +21,7 @@
 	const canPost = $derived(text.trim().length > 0 && !overLimit);
 
 	const placeholder = $derived(
-		localText('social_compose_placeholder', undefined, 'social') ?? "What's on your mind?"
+		dict.localText('social_compose_placeholder', undefined, 'social') ?? "What's on your mind?"
 	);
 
 	function handlePost() {

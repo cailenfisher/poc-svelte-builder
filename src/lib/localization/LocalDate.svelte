@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getActiveLocaleCode } from './dictionary.svelte';
+	import { getDictionary } from './context.svelte';
 	import { formatDate } from './localize';
 	import type { DateStyle } from './localize';
 
@@ -13,7 +13,8 @@
 		locale?: string;
 	} = $props();
 
-	const activeLocale = $derived(locale ?? getActiveLocaleCode());
+	const dict = getDictionary();
+	const activeLocale = $derived(locale ?? dict.getActiveLocaleCode());
 	const formatted = $derived(formatDate(value, activeLocale, style));
 </script>
 

@@ -4,7 +4,8 @@
 	import Card from '$lib/components/ui/Card.svelte';
 	import Alert from '$lib/components/ui/Alert.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
-	import { localText } from '$lib/localization/dictionary.svelte';
+	import { getDictionary } from '$lib/localization/context.svelte';
+	const dict = getDictionary();
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 	let { stats } = $derived(data);
@@ -13,7 +14,7 @@
 </script>
 
 <svelte:head>
-	<title>{localText('page_title_admin_dashboard')}</title>
+	<title>{dict.localText('page_title_admin_dashboard')}</title>
 </svelte:head>
 
 <div class="space-y-6">

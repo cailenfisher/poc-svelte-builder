@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { PUBLIC_APPLICATION_LANGUAGE_SUPPORT_ENABLED } from '$env/static/public';
+	import { PUBLIC_APPLICATION_DEFAULT_LANGUAGE, PUBLIC_APPLICATION_LANGUAGE_SUPPORT_ENABLED } from '$env/static/public';
 	import './layout.css';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
-	import { loadDictionary, localText } from '$lib/localization/dictionary.svelte';
+	import { Dictionary } from '$lib/localization/dictionary.svelte';
+	import { setDictionary } from '$lib/localization/context.svelte';
 	import Navbar from '$lib/components/universal/Nav/Navbar.svelte';
 
 	let { data, children } = $props();
@@ -12,10 +13,20 @@
 
 	let enableLocalization = Boolean(PUBLIC_APPLICATION_LANGUAGE_SUPPORT_ENABLED);
 
-	let dictionaryLoaded = $state(false);
+	const dict = new Dictionary(PUBLIC_APPLICATION_DEFAULT_LANGUAGE);
+	setDictionary(dict);
+
+	// Synchronous initial load — runs during SSR so content is available on first render.
+	// Intentionally reads the initial value of dictionaryPayload only; $effect handles reloads.
+	dict.loadDictionary(dictionaryPayload);
+
+	// Re-load on client-side navigation when the server returns new dictionaryPayload.
 	$effect(() => {
-		dictionaryLoaded = loadDictionary(dictionaryPayload);
+		dict.loadDictionary(dictionaryPayload);
 	});
+
+	// Reactive: re-evaluates whenever dict.#data changes (via $state inside Dictionary).
+	let dictionaryLoaded = $derived(dict.isLoaded);
 
 	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((_event, _session) => {
@@ -28,7 +39,7 @@
 	});
 </script>
 
-<svelte:head><title>{localText('site_name')}</title></svelte:head>
+<svelte:head><title>{dict.localText('site_name')}</title></svelte:head>
 
 {#if page.url.pathname.startsWith('/demo')}
 	{#if dictionaryLoaded || !enableLocalization}

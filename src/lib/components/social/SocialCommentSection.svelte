@@ -1,9 +1,10 @@
 <script lang="ts">
 	import type { SocialComment, SocialUser } from '$lib/types/social';
 	import LocalText from '$lib/localization/LocalText.svelte';
-	import { localText } from '$lib/localization/dictionary.svelte';
+	import { getDictionary } from '$lib/localization/context.svelte';
 	import SocialAvatar from './SocialAvatar.svelte';
 	import SocialCommentItem from './SocialCommentItem.svelte';
+	const dict = getDictionary();
 
 	let {
 		comments,
@@ -24,7 +25,7 @@
 	const activeUser = $derived(userMap.get(activeUserId));
 
 	const placeholder = $derived(
-		localText('social_add_comment_placeholder', undefined, 'social') ?? 'Write a comment...'
+		dict.localText('social_add_comment_placeholder', undefined, 'social') ?? 'Write a comment...'
 	);
 
 	function handleSubmit() {

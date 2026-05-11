@@ -3,7 +3,8 @@
 	import LocalText from '$lib/localization/LocalText.svelte';
 	import PmTaskCard from './PmTaskCard.svelte';
 	import { faEllipsis, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
-	import { localText } from '$lib/localization/dictionary.svelte';
+	import { getDictionary } from '$lib/localization/context.svelte';
+	const dict = getDictionary();
 
 	type Member = { id: string; initials: string; bg: string; text: string };
 	type Task = { id: number; labelCode: string; priority?: 'P1'; assigneeId: string; title?: string };
@@ -115,7 +116,7 @@
 					bind:this={inputEl}
 					bind:value={newTitle}
 					class="pm-add-task-input"
-					placeholder={localText('pm_add_task_placeholder', undefined, 'pm')}
+					placeholder={dict.localText('pm_add_task_placeholder', undefined, 'pm')}
 					onkeydown={(e) => {
 						if (e.key === 'Enter') saveTask();
 						if (e.key === 'Escape') cancelAdd();

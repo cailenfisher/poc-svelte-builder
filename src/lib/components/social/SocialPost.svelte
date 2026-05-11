@@ -1,11 +1,12 @@
 <script lang="ts">
 	import type { SocialPost, SocialComment, SocialUser } from '$lib/types/social';
 	import LocalText from '$lib/localization/LocalText.svelte';
-	import { localText } from '$lib/localization/dictionary.svelte';
+	import { getDictionary } from '$lib/localization/context.svelte';
 	import Icon from '$lib/components/ui/Icon.svelte';
 	import { faHeart, faComment, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 	import SocialAvatar from './SocialAvatar.svelte';
 	import SocialCommentSection from './SocialCommentSection.svelte';
+	const dict = getDictionary();
 
 	let {
 		post,
@@ -42,11 +43,11 @@
 	const commentCount = $derived(comments.length);
 
 	const likeLabel = $derived(
-		localText('social_likes_label', { count: likeCount }, 'social') ??
+		dict.localText('social_likes_label', { count: likeCount }, 'social') ??
 			`${likeCount} like${likeCount !== 1 ? 's' : ''}`
 	);
 	const commentLabel = $derived(
-		localText('social_comments_label', { count: commentCount }, 'social') ??
+		dict.localText('social_comments_label', { count: commentCount }, 'social') ??
 			`${commentCount} comment${commentCount !== 1 ? 's' : ''}`
 	);
 
